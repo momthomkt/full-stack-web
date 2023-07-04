@@ -44,16 +44,6 @@ class UserService {
         })
     }
 
-    // compareUserPassword = (userPassword) => {
-    //     return new Promise((resolve, reject) => {
-    //         try {
-
-    //         } catch (error) {
-    //             reject(error);
-    //         }
-    //     })
-    // }
-
     checkUserEmail = (userEmail) => {
         return new Promise(async (resolve, reject) => {
             try {
@@ -65,6 +55,33 @@ class UserService {
                 } else {
                     resolve(false);
                 }
+            } catch (error) {
+                reject(error);
+            }
+        })
+    }
+
+    getAllUsers = (userId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let users = '';
+                if (userId === 'All') {
+                    users = await db.User.findAll({
+                        attributes: {
+                            exclude: ['password']
+                        }
+                    })
+                }
+                else if (userId) {
+                    users = await db.User.findOne({
+                        where: { id: userId },
+                        attributes: {
+                            exclude: ['password']
+                        }
+                    })
+                }
+
+                resolve(users);
             } catch (error) {
                 reject(error);
             }
