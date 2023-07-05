@@ -30,7 +30,7 @@ class CrudService {
                 let hashPassword = await bcrypt.hashSync(password, salt);
                 resolve(hashPassword);
             } catch (error) {
-                reject(e);
+                reject(error);
             }
         })
     }
@@ -41,7 +41,7 @@ class CrudService {
                 let dataUser = await db.User.findAll();
                 resolve(dataUser);
             } catch (error) {
-                reject(e);
+                reject(error);
             }
         })
     }
