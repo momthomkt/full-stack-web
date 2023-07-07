@@ -109,7 +109,7 @@ class UserService {
                 if (check === true) {
                     resolve({
                         errCode: 1,
-                        message: 'Your email is ready in used, Please try another email',
+                        errMessage: 'Your email is ready in used, Please try another email',
                     });
                 }
                 else {
