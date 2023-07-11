@@ -49,14 +49,14 @@ class App extends Component {
                         {/* {this.props.isLoggedIn && <Header />} */}
                         {this.props.isLoggedIn && <Header />}
 
-                        <span className="content-container">
+                        <div className="content-container">
                             <Switch>
                                 <Route path={path.HOME} exact component={(Home)} />
                                 <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
                                 <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
                                 <Route path={path.HOMEPAGE} exact component={HomePage} />
                             </Switch>
-                        </span>
+                        </div>
 
                         <ToastContainer
                             className="toast-container" toastClassName="toast-item" bodyClassName="toast-item-body"
