@@ -1,6 +1,10 @@
 .home-header-container {
     height: 60px;
     width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 10000;
+    background: white;
 
     .home-header-content {
         width: 100%;
@@ -101,17 +105,19 @@
 
 .home-header-banner {
     background-image: url('../../assets/header-background.jpg');
-    height: 485px;
+    // height: 485px;
+    height: 650px;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     display: flex;
     flex-direction: column;
+    //padding: 15px 0;
 
     .content-up {
         background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0.1));
         height: 65%;
-        padding-top: 15px;
+        padding-top: 100px;
 
         .title1 {
             text-align: center;

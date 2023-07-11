@@ -47,6 +47,13 @@
         background: #f5f5f5;
     }
 
+    &.section-about {
+        height: 500px !important;
+        padding: 0 100px;
+        border-top: 1px solid #d9d3d3;
+        border-bottom: 1px solid #d9d3d3;
+    }
+
     .section-body {
         .section-customize {
 
@@ -138,6 +145,41 @@
             .position {
                 text-align: center;
                 justify-content: center;
+            }
+        }
+    }
+}
+
+.home-footer {
+    text-align: center;
+    padding-top: 8px;
+
+    a {
+        text-decoration: unset;
+    }
+}
+
+.section-about {
+    .section-about-header {
+        padding: 20px 10px;
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    .section-about-content {
+        display: flex;
+        gap: 15px;
+
+        .content-left {
+            width: 60%;
+        }
+
+        .content-right {
+            width: 40%;
+
+            p {
+                text-align: justify;
+                font-style: italic;
             }
         }
     }
