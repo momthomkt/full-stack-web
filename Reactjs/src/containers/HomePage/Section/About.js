@@ -18,9 +18,9 @@ class About extends Component {
                             height="400px"
                             src="https://www.youtube.com/embed/jCMrJE9Rpa8?list=PLTpNwHSD94usk1ge3RG7NNqSIwvmTwlfm"
                             title="[PPL - W2] TUTORIAL PROGRAMMING CODE: LEXER"
-                            frameborder="0"
+                            frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen></iframe>
+                            allowFullScreen></iframe>
                     </div>
                     <div className="content-right">
                         <p>Giảng viên: Ths. Trần Ngọc Bảo Duy @ HCMUT</p>

@@ -26,6 +26,7 @@ class Menu extends Component {
 
     render() {
         const { name, active, link, children, onClick, hasSubMenu, onLinkClick } = this.props;
+        console.log('check props12314: ', this.props);
         return (
             <li className={"menu" + (hasSubMenu ? " has-sub-menu" : "") + ("") + (active ? " active" : "")}>
                 {hasSubMenu ? (
@@ -48,10 +49,11 @@ class Menu extends Component {
                         </div>
                     </Fragment>
                 ) : (
-                        <Link to={link} className="menu-link" onClick={onLinkClick}>
-                            <FormattedMessage id={name} />
-                        </Link>
-                    )}
+                    //<Link to={link} className="menu-link" onClick={onLinkClick}>
+                    <Link to={link} className="menu-link" onClick={onClick}>
+                        <FormattedMessage id={name} />
+                    </Link>
+                )}
             </li>
         );
     }
@@ -128,9 +130,9 @@ class Navigator extends Component {
         }
 
         if (link) {
+            console.log('check compare', this.props.location.pathname, link);
             return this.props.location.pathname === link;
         }
-
         return false;
     };
 
@@ -198,6 +200,7 @@ class Navigator extends Component {
                                             group.menus.map((menu, menuIndex) => {
                                                 const isMenuHasSubMenuActive = this.isMenuHasSubMenuActive(location, menu.subMenus, menu.link);
                                                 const isSubMenuOpen = this.state.expandedMenu[groupIndex + '_' + menuIndex] === true;
+                                                console.log('aloalo123', isMenuHasSubMenuActive);
                                                 return (
                                                     <MenuWithRouter
                                                         key={menuIndex}
