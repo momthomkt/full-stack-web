@@ -1,33 +1,45 @@
 import actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    isLoggedIn: false,
-    adminInfo: null
+    genders: [],
+    roles: [],
+    positions: [],
+    isLoading_gender: false,
+    isLoading_role: false,
+    isLoading_position: false
 }
 
-const appReducer = (state = initialState, action) => {
+const adminReducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.ADMIN_LOGIN_SUCCESS:
+        case actionTypes.FETCH_ALL_CODE_START:
+            console.log('fetch all code start', action);
+            state['isLoading_' + action.typeInput] = true;
             return {
-                ...state,
-                isLoggedIn: true,
-                adminInfo: action.adminInfo
+                ...state
             }
-        case actionTypes.ADMIN_LOGIN_FAIL:
+        case actionTypes.FETCH_ALL_CODE_SUCCESS:
+            // let state = { ...state };
+            // state[action.typeInput + 's'] = action.data;
+            // state['isLoading_' + action.typeInput] = true;
+            // //console.log('fetch all code success: ', state);
+            // return {
+            //     ...state
+            // }
+            state[action.typeInput + 's'] = action.data;
+            state['isLoading_' + action.typeInput] = false;
+            //console.log('fetch all code success: ', state);
             return {
-                ...state,
-                isLoggedIn: false,
-                adminInfo: null
+                ...state
             }
-        case actionTypes.PROCESS_LOGOUT:
+        case actionTypes.FETCH_ALL_CODE_FAILED:
+            state['isLoading_' + action.typeInput] = false;
+            state[action.typeInput + 's'] = [];
             return {
-                ...state,
-                isLoggedIn: false,
-                adminInfo: null
+                ...state
             }
         default:
             return state;
     }
 }
 
-export default appReducer;
+export default adminReducer;
