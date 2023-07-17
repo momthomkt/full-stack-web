@@ -12,7 +12,8 @@ export const LANGUAGES = {
 };
 
 export const manageActions = {
-    ADD: "ADD",
+    CREATE: "CREATE",
+    READ: "READ",
     EDIT: "EDIT",
     DELETE: "DELETE"
 };

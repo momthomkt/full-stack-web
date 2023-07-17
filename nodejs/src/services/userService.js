@@ -121,8 +121,11 @@ class UserService {
                         lastName: data.lastName,
                         address: data.address,
                         phoneNumber: data.phoneNumber,
-                        gender: data.gender == '1' ? true : false,
-                        roleId: data.roleId
+                        // gender: data.gender == '1' ? true : false,
+                        image: data.image ? data.image : '',
+                        gender: data.gender,
+                        roleId: data.roleId,
+                        positionId: data.positionId ? data.positionId : 'P0',
                     })
                     resolve({
                         errCode: 0,
@@ -179,11 +182,31 @@ class UserService {
                     })
                 }
                 else {
-                    await db.User.update({
-                        firstName: data.firstName,
-                        lastName: data.lastName,
-                        address: data.address,
-                    }, {
+                    let objData = {};
+                    if (data.image) {
+                        objData = {
+                            firstName: data.firstName,
+                            lastName: data.lastName,
+                            address: data.address,
+                            phoneNumber: data.phoneNumber,
+                            gender: data.gender ? data.gender : 'O',
+                            image: data.image,
+                            positionId: data.positionId ? data.positionId : 'P0',
+                            roleId: data.roleId ? data.roleId : 'R1',
+                        };
+                    }
+                    else {
+                        objData = {
+                            firstName: data.firstName,
+                            lastName: data.lastName,
+                            address: data.address,
+                            phoneNumber: data.phoneNumber,
+                            gender: data.gender ? data.gender : 'O',
+                            positionId: data.positionId ? data.positionId : 'P0',
+                            roleId: data.roleId ? data.roleId : 'R1',
+                        };
+                    }
+                    await db.User.update(objData, {
                         where: {
                             id: data.id
                         }

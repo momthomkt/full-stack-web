@@ -67,6 +67,7 @@
         "doctor": "Doctor",
         "patient": "Patient",
         "image": "Avatar",
-        "save": "Save"
+        "save": "Save",
+        "save-changes": "Save changes"
     }
 }

@@ -67,6 +67,7 @@
         "doctor": "Bác sĩ",
         "patient": "Bệnh nhân",
         "image": "Ảnh đại diện",
-        "save": "Lưu"
+        "save": "Lưu",
+        "save-changes": "Lưu thay đổi"
     }
 }
