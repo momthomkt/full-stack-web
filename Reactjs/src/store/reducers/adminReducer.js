@@ -7,7 +7,8 @@ const initialState = {
     isLoading_gender: false,
     isLoading_role: false,
     isLoading_position: false,
-    users: []
+    users: [],
+    topDoctors: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -48,17 +49,17 @@ const adminReducer = (state = initialState, action) => {
                 ...state
             }
 
-        // case actionTypes.EDIT_USERS_SUCCESS:
-        //     state.users = [];
-        //     return {
-        //         ...state
-        //     }
+        case actionTypes.FETCH_TOP_DOCTORS_SUCCESS:
+            state.topDoctors = action.topDoctors;
+            return {
+                ...state
+            }
 
-        // case actionTypes.EDIT_USERS_FAILED:
-        //     state.users = [];
-        //     return {
-        //         ...state
-        //     }
+        case actionTypes.FETCH_TOP_DOCTORS_FAILED:
+            state.topDoctors = [];
+            return {
+                ...state
+            }
 
         default:
             return state;

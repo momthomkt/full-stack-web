@@ -2,12 +2,34 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Slider from 'react-slick';
+import * as actions from '../../../store/actions';
 
 class OutStandingDoctor extends Component {
 
-    render() {
-        let settings = this.props.settings;
+    constructor(props) {
+        super(props);
+        this.state = {
+            topDoctors: []
+        }
+    }
 
+    componentDidUpdate = (prevProps, prevState) => {
+        if (prevProps.topDoctors !== this.props.topDoctors) {
+            this.setState({
+                topDoctors: this.props.topDoctors
+            })
+        }
+    }
+
+    componentDidMount = () => {
+        this.props.loadTopDoctors('10');
+    }
+
+    render() {
+        let { settings } = this.props;
+        let { topDoctors } = this.state;
+        console.log('check doctors: ', topDoctors);
+        topDoctors = topDoctors.concat(topDoctors).concat(topDoctors);
         return (
             <div className="section-share section-outstanding-doctor">
                 <div className="section-container">
@@ -17,18 +39,28 @@ class OutStandingDoctor extends Component {
                     </div>
                     <div className="section-body">
                         <Slider {...settings}>
-                            <div className="section-customize">
-                                <div className="customize-border">
-                                    <div className="outer-bg">
-                                        <div className="bg-image section-outstanding-doctor" />
-                                    </div>
-                                    <div className="position text-center">
-                                        <div>Giáo sư tiến sĩ Nguyễn Văn A</div>
-                                        <div>Cơ xương khớp 1</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="section-customize">
+                            {topDoctors && topDoctors.length > 0
+                                && topDoctors.map((item, index) => {
+                                    let nameAndPosVi = `${item.positionData.valueVi}, ${item.firstName + item.lastName}`;
+                                    let imageBase64 = '';
+                                    if (item.image) {
+                                        imageBase64 = new Buffer(item.image, 'base64').toString('binary');
+                                        console.log('check image base64: ', imageBase64);
+                                    }
+                                    return (<div className="section-customize">
+                                        <div className="customize-border">
+                                            <div className="outer-bg">
+                                                <div className="bg-image section-outstanding-doctor" style={{ backgroundImage: `url(${imageBase64})` }} />
+                                            </div>
+                                            <div className="position text-center">
+                                                <div>{nameAndPosVi}</div>
+                                                <div>Cơ xương khớp 1</div>
+                                            </div>
+                                        </div>
+                                    </div>)
+                                })
+                            }
+                            {/* <div className="section-customize">
                                 <div className="customize-border">
                                     <div className="outer-bg">
                                         <div className="bg-image section-outstanding-doctor" />
@@ -82,7 +114,7 @@ class OutStandingDoctor extends Component {
                                         <div>Cơ xương khớp 6</div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </Slider>
                     </div>
                 </div>
@@ -94,12 +126,14 @@ class OutStandingDoctor extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn,
+        topDoctors: state.admin.topDoctors
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        loadTopDoctors: (limit) => dispatch(actions.fetchTopDoctors(limit))
     };
 };
 
