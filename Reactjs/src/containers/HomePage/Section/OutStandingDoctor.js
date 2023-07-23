@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Slider from 'react-slick';
 import * as actions from '../../../store/actions';
+import { LANGUAGES } from '../../../utils';
 
 class OutStandingDoctor extends Component {
 
@@ -28,8 +29,6 @@ class OutStandingDoctor extends Component {
     render() {
         let { settings } = this.props;
         let { topDoctors } = this.state;
-        console.log('check doctors: ', topDoctors);
-        topDoctors = topDoctors.concat(topDoctors).concat(topDoctors);
         return (
             <div className="section-share section-outstanding-doctor">
                 <div className="section-container">
@@ -42,10 +41,10 @@ class OutStandingDoctor extends Component {
                             {topDoctors && topDoctors.length > 0
                                 && topDoctors.map((item, index) => {
                                     let nameAndPosVi = `${item.positionData.valueVi}, ${item.firstName + item.lastName}`;
+                                    let nameAndPosEn = `${item.positionData.valueEn}, ${item.firstName + item.lastName}`;
                                     let imageBase64 = '';
                                     if (item.image) {
                                         imageBase64 = new Buffer(item.image, 'base64').toString('binary');
-                                        console.log('check image base64: ', imageBase64);
                                     }
                                     return (<div className="section-customize">
                                         <div className="customize-border">
@@ -53,7 +52,7 @@ class OutStandingDoctor extends Component {
                                                 <div className="bg-image section-outstanding-doctor" style={{ backgroundImage: `url(${imageBase64})` }} />
                                             </div>
                                             <div className="position text-center">
-                                                <div>{nameAndPosVi}</div>
+                                                <div>{this.props.language === LANGUAGES.VI ? nameAndPosVi : nameAndPosEn}</div>
                                                 <div>Cơ xương khớp 1</div>
                                             </div>
                                         </div>
@@ -127,7 +126,8 @@ class OutStandingDoctor extends Component {
 const mapStateToProps = state => {
     return {
         isLoggedIn: state.user.isLoggedIn,
-        topDoctors: state.admin.topDoctors
+        topDoctors: state.admin.topDoctors,
+        language: state.app.language
     };
 };
 
