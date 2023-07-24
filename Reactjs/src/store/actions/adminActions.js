@@ -1,5 +1,10 @@
 import actionTypes from './actionTypes';
-import { getAllCodeService, createNewUserService, getAllUsers, deleteUser, editUserService, getTopDoctorsService } from '../../services/userService';
+import {
+    getAllCodeService, createNewUserService,
+    getAllUsers, deleteUser,
+    editUserService, getTopDoctorsService,
+    getAllDoctorsService, addDetailDoctorsService
+} from '../../services/userService';
 import { toast } from "react-toastify";
 import { LANGUAGES } from '../../utils';
 // export const fetchAllCodeStart = () => ({
@@ -176,3 +181,55 @@ export const fetchTopDoctorsSuccess = (topDoctors) => ({
 export const fetchTopDoctorsFailed = () => ({
     type: actionTypes.FETCH_TOP_DOCTORS_FAILED
 })
+
+export const fetchAllDoctors = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllDoctorsService();
+            if (res && res.errCode === 0) {
+                dispatch(fetchAllDoctorsSuccess(res.data));
+            }
+            else {
+                dispatch(fetchAllDoctorsFailed());
+            }
+        } catch (e) {
+            console.log('Get all doctors error', e)
+            dispatch(fetchAllDoctorsFailed());
+        }
+    }
+}
+
+export const fetchAllDoctorsSuccess = (allDoctors) => ({
+    type: actionTypes.FETCH_ALL_DOCTORS_SUCCESS,
+    allDoctors: allDoctors
+})
+
+export const fetchAllDoctorsFailed = () => ({
+    type: actionTypes.FETCH_ALL_DOCTORS_FAILED
+})
+
+export const addDetailDoctors = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await addDetailDoctorsService(data);
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.ADD_DETAIL_DOCTORS_SUCCESS
+                });
+                toast.success('Add detail doctors succeed');
+            }
+            else {
+                toast.error('Add detail doctors error');
+                dispatch({
+                    type: actionTypes.ADD_DETAIL_DOCTORS_FAILED
+                });
+            }
+        } catch (e) {
+            console.log('Add detail doctors error', e);
+            toast.error('Add detail doctors error');
+            dispatch({
+                type: actionTypes.ADD_DETAIL_DOCTORS_FAILED
+            });
+        }
+    }
+}
