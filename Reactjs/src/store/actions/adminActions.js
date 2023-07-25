@@ -3,7 +3,8 @@ import {
     getAllCodeService, createNewUserService,
     getAllUsers, deleteUser,
     editUserService, getTopDoctorsService,
-    getAllDoctorsService, addDetailDoctorsService
+    getAllDoctorsService, addDetailDoctorService,
+    updateDetailDoctorInfoService
 } from '../../services/userService';
 import { toast } from "react-toastify";
 import { LANGUAGES } from '../../utils';
@@ -211,7 +212,7 @@ export const fetchAllDoctorsFailed = () => ({
 export const addDetailDoctors = (data) => {
     return async (dispatch, getState) => {
         try {
-            let res = await addDetailDoctorsService(data);
+            let res = await addDetailDoctorService(data);
             if (res && res.errCode === 0) {
                 dispatch({
                     type: actionTypes.ADD_DETAIL_DOCTORS_SUCCESS
@@ -229,6 +230,32 @@ export const addDetailDoctors = (data) => {
             toast.error('Add detail doctors error');
             dispatch({
                 type: actionTypes.ADD_DETAIL_DOCTORS_FAILED
+            });
+        }
+    }
+}
+
+export const updateDetailDoctorInfo = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await updateDetailDoctorInfoService(data);
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.UPDATE_DETAIL_DOCTORS_SUCCESS
+                });
+                toast.success('Save detail doctors succeed');
+            }
+            else {
+                toast.error('Save detail doctors error');
+                dispatch({
+                    type: actionTypes.UPDATE_DETAIL_DOCTORS_FAILED
+                });
+            }
+        } catch (e) {
+            console.log('Save detail doctors error', e);
+            toast.error('Save detail doctors error');
+            dispatch({
+                type: actionTypes.UPDATE_DETAIL_DOCTORS_FAILED
             });
         }
     }

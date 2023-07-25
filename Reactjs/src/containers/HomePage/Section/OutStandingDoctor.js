@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Slider from 'react-slick';
 import * as actions from '../../../store/actions';
-import { LANGUAGES } from '../../../utils';
+import { LANGUAGES, path } from '../../../utils';
+import { withRouter } from 'react-router';
 
 class OutStandingDoctor extends Component {
 
@@ -26,6 +27,10 @@ class OutStandingDoctor extends Component {
         this.props.loadTopDoctors('10');
     }
 
+    handleViewDetailDoctor = (doctor) => {
+        if (this.props.history) this.props.history.push(path.DETAIL_DOCTOR.replace(":id", `${doctor.id}`));
+    }
+
     render() {
         let { settings } = this.props;
         let { topDoctors } = this.state;
@@ -46,74 +51,21 @@ class OutStandingDoctor extends Component {
                                     if (item.image) {
                                         imageBase64 = new Buffer(item.image, 'base64').toString('binary');
                                     }
-                                    return (<div className="section-customize">
-                                        <div className="customize-border">
-                                            <div className="outer-bg">
-                                                <div className="bg-image section-outstanding-doctor" style={{ backgroundImage: `url(${imageBase64})` }} />
-                                            </div>
-                                            <div className="position text-center">
-                                                <div>{this.props.language === LANGUAGES.VI ? nameAndPosVi : nameAndPosEn}</div>
-                                                <div>Cơ xương khớp 1</div>
+                                    return (
+                                        <div className="section-customize" onClick={() => this.handleViewDetailDoctor(item)}>
+                                            <div className="customize-border">
+                                                <div className="outer-bg">
+                                                    <div className="bg-image section-outstanding-doctor" style={{ backgroundImage: `url(${imageBase64})` }} />
+                                                </div>
+                                                <div className="position text-center">
+                                                    <div>{this.props.language === LANGUAGES.VI ? nameAndPosVi : nameAndPosEn}</div>
+                                                    <div>Cơ xương khớp 1</div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>)
+                                    )
                                 })
                             }
-                            {/* <div className="section-customize">
-                                <div className="customize-border">
-                                    <div className="outer-bg">
-                                        <div className="bg-image section-outstanding-doctor" />
-                                    </div>
-                                    <div className="position text-center">
-                                        <div>Giáo sư tiến sĩ Nguyễn Văn A</div>
-                                        <div>Cơ xương khớp 2</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="section-customize">
-                                <div className="customize-border">
-                                    <div className="outer-bg">
-                                        <div className="bg-image section-outstanding-doctor" />
-                                    </div>
-                                    <div className="position text-center">
-                                        <div>Giáo sư tiến sĩ Nguyễn Văn A</div>
-                                        <div>Cơ xương khớp 3</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="section-customize">
-                                <div className="customize-border">
-                                    <div className="outer-bg">
-                                        <div className="bg-image section-outstanding-doctor" />
-                                    </div>
-                                    <div className="position text-center">
-                                        <div>Giáo sư tiến sĩ Nguyễn Văn A</div>
-                                        <div>Cơ xương khớp 4</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="section-customize">
-                                <div className="customize-border">
-                                    <div className="outer-bg">
-                                        <div className="bg-image section-outstanding-doctor" />
-                                    </div>
-                                    <div className="position text-center">
-                                        <div>Giáo sư tiến sĩ Nguyễn Văn A</div>
-                                        <div>Cơ xương khớp 5</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="section-customize">
-                                <div className="customize-border">
-                                    <div className="outer-bg">
-                                        <div className="bg-image section-outstanding-doctor" />
-                                    </div>
-                                    <div className="position text-center">
-                                        <div>Giáo sư tiến sĩ Nguyễn Văn A</div>
-                                        <div>Cơ xương khớp 6</div>
-                                    </div>
-                                </div>
-                            </div> */}
                         </Slider>
                     </div>
                 </div>
@@ -137,4 +89,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor));

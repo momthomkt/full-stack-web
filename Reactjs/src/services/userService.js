@@ -34,8 +34,15 @@ export const getAllDoctorsService = () => {
     return axios.get(`/api/get-all-doctors`);
 }
 
-export const addDetailDoctorsService = (data) => {
+export const addDetailDoctorService = (data) => {
     return axios.post(`/api/add-doctor-info`, data);
 }
 
+export const getDetailDoctorService = (id) => {
+    return axios.get(`/api/get-detail-doctor?id=${id}`);
+}
+
+export const updateDetailDoctorInfoService = (data) => {
+    return axios.put('/api/update-doctor-info', data);
+}
 // export { handleLoginApi, getAllUsers }; 

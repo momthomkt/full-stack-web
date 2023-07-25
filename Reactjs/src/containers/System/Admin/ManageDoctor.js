@@ -9,7 +9,8 @@ import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 import Select from 'react-select';
 import './ManageDoctor.scss';
-import { LANGUAGES } from '../../../utils';
+import { LANGUAGES, manageActions } from '../../../utils';
+import { getDetailDoctorService } from '../../../services/userService';
 // const options = [
 //     { value: 'chocolate', label: 'Chocolate' },
 //     { value: 'strawberry', label: 'Strawberry' },
@@ -33,7 +34,8 @@ class ManageDoctor extends Component {
             selectedDoctor: {},
             description: '',
             options: [],
-            allDoctors: []
+            allDoctors: [],
+            methodSaveDetail: ''
         }
     }
 
@@ -70,31 +72,59 @@ class ManageDoctor extends Component {
     }
 
     handleSaveContentMarkdown = async () => {
-        let data = {
-            contentHTML: this.state.contentHTML,
-            contentMarkdown: this.state.contentMarkdown,
-            description: this.state.description,
-            doctorId: this.state.selectedDoctor.value
+        if (this.state.methodSaveDetail === manageActions.CREATE) {
+            let data = {
+                contentHTML: this.state.contentHTML,
+                contentMarkdown: this.state.contentMarkdown,
+                description: this.state.description,
+                doctorId: this.state.selectedDoctor.value
+            }
+            await this.props.addDetailDoctorsRedux(data);
         }
-        await this.props.addDetailDoctorsRedux(data);
-        let labelVi = this.state.allDoctors[0].firstName + ' ' + this.state.allDoctors[0].lastName;
-        let labelEn = this.state.allDoctors[0].lastName + ' ' + this.state.allDoctors[0].firstName;
-        let label = this.props.language === LANGUAGES.VI ? labelVi : labelEn;
-        let selectedDoctor = {
-            value: this.state.allDoctors[0].id,
-            label: label
+        else if (this.state.methodSaveDetail === manageActions.EDIT) {
+            let data = {
+                contentHTML: this.state.contentHTML,
+                contentMarkdown: this.state.contentMarkdown,
+                description: this.state.description,
+                doctorId: this.state.selectedDoctor.value
+            }
+            await this.props.updateDetailDoctorInfoRedux(data);
         }
+        // let labelVi = this.state.allDoctors[0].firstName + ' ' + this.state.allDoctors[0].lastName;
+        // let labelEn = this.state.allDoctors[0].lastName + ' ' + this.state.allDoctors[0].firstName;
+        // let label = this.props.language === LANGUAGES.VI ? labelVi : labelEn;
+
         this.setState({
             contentMarkdown: '',
             contentHTML: '',
-            selectedDoctor: selectedDoctor,
+            // selectedDoctor: selectedDoctor,
+            selectedDoctor: {},
             description: ''
         })
     }
 
-    handleChange = selectedDoctor => {
+    handleChangeSelect = async (selectedDoctor) => {
         this.setState({ selectedDoctor });
-        console.log(`Option selected:`, selectedDoctor);
+
+        let res = await getDetailDoctorService(selectedDoctor.value);
+        console.log('check res select: ', res);
+        if (res && res.errCode === 0 && res.doctorData && res.doctorData.markDown) {
+            let markDown = res.doctorData.markDown;
+            this.setState({
+                contentHTML: markDown.contentHTML,
+                contentMarkdown: markDown.contentMarkdown,
+                description: markDown.description,
+                methodSaveDetail: manageActions.EDIT
+            })
+        }
+        else {
+            this.setState({
+                contentHTML: '',
+                contentMarkdown: '',
+                description: '',
+                methodSaveDetail: manageActions.CREATE
+            })
+        }
     };
 
     handleOnchangeDescription = (event) => {
@@ -104,8 +134,8 @@ class ManageDoctor extends Component {
     }
 
     render() {
-        let selectedDoctor = this.state.options[0] ? this.state.options[0] : { value: '', label: '' };
-        console.log('check state: ', this.state);
+        //let selectedDoctor = this.state.options[0] ? this.state.options[0] : { value: '', label: '' };
+        let { selectedDoctor } = this.state;
         return (
             <div className="manage-doctor-container">
                 <div className="manage-doctor-title">
@@ -116,7 +146,7 @@ class ManageDoctor extends Component {
                         <label>Chọn bác sĩ</label>
                         <Select
                             value={selectedDoctor}
-                            onChange={this.handleChange}
+                            onChange={this.handleChangeSelect}
                             options={this.state.options}
                         />
                     </div>
@@ -135,7 +165,7 @@ class ManageDoctor extends Component {
                         style={{ height: '500px' }}
                         renderHTML={text => mdParser.render(text)}
                         onChange={this.handleEditorChange}
-
+                        value={this.state.contentMarkdown}
                     />
                 </div>
                 <button
@@ -160,7 +190,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchAllDoctorsRedux: () => dispatch(actions.fetchAllDoctors()),
-        addDetailDoctorsRedux: (data) => dispatch(actions.addDetailDoctors(data))
+        addDetailDoctorsRedux: (data) => dispatch(actions.addDetailDoctors(data)),
+        updateDetailDoctorInfoRedux: (data) => dispatch(actions.updateDetailDoctorInfo(data))
     };
 };
 

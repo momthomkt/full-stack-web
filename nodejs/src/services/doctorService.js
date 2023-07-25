@@ -73,7 +73,7 @@ let getDetailDoctor = (id) => {
             let doctorData = await db.User.findOne({
                 where: { id: id },
                 attributes: {
-                    exclude: ['password', 'image', 'createdAt', 'updatedAt']
+                    exclude: ['password', 'createdAt', 'updatedAt']
                 },
                 include: [
                     { model: db.Markdown, as: 'markDown', attributes: { exclude: ['createdAt', 'updatedAt'] } },
@@ -81,9 +81,17 @@ let getDetailDoctor = (id) => {
                     { model: db.Allcode, as: 'genderData', attributes: ['valueEn', 'valueVi'] },
                     { model: db.Allcode, as: 'roleData', attributes: ['valueEn', 'valueVi'] }
                 ],
-                raw: true,
+                raw: false,
                 nest: true
             })
+
+            if (doctorData && doctorData.image) {
+                // doctorData.image = new Buffer(doctorData.image, 'base64').toString('binary');
+                doctorData.image = Buffer.from(doctorData.image, 'base64').toString('binary');
+            }
+
+            if (!doctorData) doctorData = {};
+
             resolve({
                 errCode: 0,
                 message: 'OK',
@@ -95,6 +103,56 @@ let getDetailDoctor = (id) => {
     })
 }
 
+let updateDoctorInfo = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let infoMarkdown = await db.Markdown.findOne({
+                where: { doctorId: data.doctorId }
+            })
+            if (!infoMarkdown) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Markdown is not found!'
+                })
+            }
+            else {
+                let objMarkdown = {
+                    contentHTML: data.contentHTML,
+                    contentMarkdown: data.contentMarkdown,
+                    description: data.description ? data.description : ''
+                }
+                await db.Markdown.update(objMarkdown, {
+                    where: { doctorId: data.doctorId }
+                })
+                resolve({
+                    errCode: 0,
+                    message: 'OK'
+                })
+            }
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+let getDoctorMarkdown = (doctorId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let markDown = await db.Markdown.findOne({
+                where: { doctorId: doctorId }
+            })
+            resolve({
+                errCode: 0,
+                message: 'OK',
+                markDown: markDown
+            })
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
-    getTopDoctorHome, getAllDoctor, addDoctorInfo, getDetailDoctor
+    getTopDoctorHome, getAllDoctor, addDoctorInfo,
+    getDetailDoctor, updateDoctorInfo, getDoctorMarkdown
 }
