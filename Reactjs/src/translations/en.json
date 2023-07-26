@@ -47,6 +47,9 @@
             "manage-specialty": "Manage Specialties",
             "handbook": "Handbook",
             "manage-handbook": "Manage Handbook"
+        },
+        "doctor": {
+            "manage-schedule": "Manage Doctor's schedule"
         }
     },
     "manage-user": {
@@ -69,5 +72,9 @@
         "image": "Avatar",
         "save": "Save",
         "save-changes": "Save changes"
+    },
+    "homepage": {
+        "outstanding-doctor": "Last week's outstanding doctor",
+        "more-info": "More info"
     }
 }
