@@ -181,7 +181,6 @@ class ManageDoctor extends Component {
 
 const mapStateToProps = state => {
     return {
-        users: state.admin.users,
         language: state.app.language,
         allDoctors: state.admin.allDoctors
     };

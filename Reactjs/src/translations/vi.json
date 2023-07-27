@@ -76,5 +76,11 @@
     "homepage": {
         "outstanding-doctor": "Bác sĩ nổi bật tuần qua",
         "more-info": "Xem thêm"
+    },
+    "manage-schedule": {
+        "title": "Quản lý kế hoạch khám bệnh của bác sĩ",
+        "select-doctor": "Chọn bác sĩ",
+        "select-day": "Chọn ngày",
+        "save-info": "Lưu thông tin"
     }
 }
