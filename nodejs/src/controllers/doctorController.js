@@ -108,6 +108,38 @@ class doctorController {
         }
     }
 
+    bulkCreateSchedule = async (req, res) => {
+        try {
+            // if (!req.query.doctorId) {
+            //     return res.status(200).json({
+            //         errCode: -1,
+            //         message: 'Missing input parameter'
+            //     });
+            // }
+            let result = await doctorService.bulkCreateSchedule(req.body);
+            return res.status(200).json(result);
+        } catch (error) {
+            console.log(error);
+            return res.status(200).json({
+                errCode: -1,
+                message: 'Error from server'
+            });
+        }
+    }
+
+    getScheduleByDate = async (req, res) => {
+        try {
+            let result = await doctorService.getScheduleByDate(req.query.doctorId, req.query.date);
+            return res.status(200).json(result);
+        } catch (error) {
+            console.log(error);
+            return res.status(200).json({
+                errCode: -1,
+                message: 'Error from server'
+            });
+        }
+    }
+
 }
 module.exports = new doctorController;
 

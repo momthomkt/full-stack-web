@@ -82,5 +82,13 @@
         "select-doctor": "Select doctor",
         "select-day": "Select day",
         "save-info": "Save infomation"
+    },
+    "patient": {
+        "detail-doctor": {
+            "schedule": "Examination schedule",
+            "no-schedule": "There are no appointments during this time. Please choose another time",
+            "choose": "Choose",
+            "book-free": "and book (Fee for booking is free)"
+        }
     }
 }

@@ -1,4 +1,7 @@
 import db from '../models/index';
+require('dotenv').config();
+const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE
+
 let getTopDoctorHome = (limit) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -152,7 +155,71 @@ let getDoctorMarkdown = (doctorId) => {
     })
 }
 
+let bulkCreateSchedule = async (schedule) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!schedule) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing required param!'
+                })
+            }
+            else if (schedule.length > 0) {
+                schedule = schedule.map(item => {
+                    item.maxNumber = MAX_NUMBER_SCHEDULE;
+                    return item;
+                })
+                console.log(schedule);
+                await db.Schedule.destroy({
+                    where: { doctorId: schedule[0].doctorId, date: new Date(schedule[0].date) }
+                });
+                await db.Schedule.bulkCreate(schedule);
+
+                resolve({
+                    errCode: 0,
+                    errMessage: 'OK'
+                });
+            }
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+let getScheduleByDate = (doctorId, date) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!doctorId || !date) {
+                resolve({
+                    errCode: 1,
+                    errMessage: "Missing required parameter"
+                })
+            }
+            else {
+                console.log("check new date: ", date);
+                let data = await db.Schedule.findAll({
+                    where: { doctorId: doctorId, date: date },
+                    include: [
+                        { model: db.Allcode, as: 'timeTypeData', attributes: ['valueEn', 'valueVi'] }
+                    ],
+                    raw: false,
+                    nest: true
+                })
+                console.log('check result data: ', data)
+                if (!data) data = [];
+                resolve({
+                    errCode: 0,
+                    data: data
+                })
+            }
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
 module.exports = {
     getTopDoctorHome, getAllDoctor, addDoctorInfo,
-    getDetailDoctor, updateDoctorInfo, getDoctorMarkdown
+    getDetailDoctor, updateDoctorInfo, getDoctorMarkdown,
+    bulkCreateSchedule, getScheduleByDate
 }
