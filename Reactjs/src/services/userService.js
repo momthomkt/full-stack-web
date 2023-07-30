@@ -42,6 +42,10 @@ export const getDetailDoctorService = (id) => {
     return axios.get(`/api/get-detail-doctor?id=${id}`);
 }
 
+export const getDetailManageDoctor = (id) => {
+    return axios.get(`/api/detail-manage-doctor?id=${id}`);
+}
+
 export const updateDetailDoctorInfoService = (data) => {
     return axios.put('/api/update-doctor-info', data);
 }

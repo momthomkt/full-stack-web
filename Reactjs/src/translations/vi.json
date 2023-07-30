@@ -90,5 +90,19 @@
             "choose": "Chọn",
             "book-free": "và đặt (Phí đặt lịch 0đ)"
         }
+    },
+    "admin": {
+        "manage-doctor": {
+            "title": "Tạo thêm thông tin cho Bác sĩ",
+            "select-doctor": "Chọn bác sĩ",
+            "intro": "Thông tin giới thiệu",
+            "select-price": "Chọn giá",
+            "select-payment": "Chọn phương thức thanh toán",
+            "select-province": "Chọn tỉnh thành",
+            "name-clinic": "Tên phòng khám",
+            "address-clinic": "Địa chỉ phòng khám",
+            "note": "Ghi chú",
+            "save-info": "Lưu thông tin"
+        }
     }
 }

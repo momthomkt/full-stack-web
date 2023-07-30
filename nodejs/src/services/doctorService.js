@@ -52,18 +52,43 @@ let getAllDoctor = () => {
 let addDoctorInfo = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            await db.Markdown.create({
-                contentHTML: data.contentHTML,
-                contentMarkdown: data.contentMarkdown,
-                description: data.description,
-                doctorId: data.doctorId,
-                // specialtyId: data.specialtyId,
-                // clinicId: data.clinicId
-            });
-            resolve({
-                errCode: 0,
-                errMessage: 'Save info doctor succeed'
-            });
+            let infoArr = ['contentHTML', 'contentMarkdown', 'doctorId', 'priceId', 'provinceId', 'paymentId', 'addressClinic', 'nameClinic'];
+            let checkInput = true;
+            for (let ele of infoArr) {
+                if (!data[ele]) {
+                    checkInput = false;
+                    break;
+                }
+            }
+            if (!checkInput) {
+                resolve({
+                    errCode: -1,
+                    message: 'Missing parameters'
+                })
+            }
+            else {
+                await db.Doctor_info.create({
+                    doctorId: data.doctorId,
+                    priceId: data.priceId,
+                    provinceId: data.provinceId,
+                    paymentId: data.paymentId,
+                    addressClinic: data.addressClinic,
+                    nameClinic: data.nameClinic,
+                    note: data.note ? data.note : null
+                })
+                await db.Markdown.create({
+                    contentHTML: data.contentHTML,
+                    contentMarkdown: data.contentMarkdown,
+                    description: data.description,
+                    doctorId: data.doctorId,
+                    // specialtyId: data.specialtyId,
+                    // clinicId: data.clinicId
+                });
+                resolve({
+                    errCode: 0,
+                    message: 'Save info doctor succeed'
+                });
+            }
         } catch (error) {
             reject(error);
         }
@@ -106,31 +131,89 @@ let getDetailDoctor = (id) => {
     })
 }
 
+let getDetailManageDoctor = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let doctorData = await db.User.findOne({
+                where: { id: id },
+                attributes: {
+                    exclude: ['email', 'password', 'address', 'phoneNumber', 'gender', 'roleId', 'positionId', 'image', 'createdAt', 'updatedAt']
+                },
+                include: [
+                    { model: db.Markdown, as: 'markDown', attributes: { exclude: ['createdAt', 'updatedAt'] } },
+                    { model: db.Doctor_info, as: 'doctorInfos', attributes: { exclude: ['createdAt', 'updatedAt'] } }
+                ],
+                raw: false,
+                nest: true
+            })
+            if (!doctorData) doctorData = {};
+
+            resolve({
+                errCode: 0,
+                message: 'OK',
+                doctorData: doctorData
+            })
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
 let updateDoctorInfo = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let infoMarkdown = await db.Markdown.findOne({
-                where: { doctorId: data.doctorId }
-            })
-            if (!infoMarkdown) {
+            let infoArr = ['contentHTML', 'contentMarkdown', 'doctorId', 'priceId', 'provinceId', 'paymentId', 'addressClinic', 'nameClinic'];
+            let checkInput = true;
+            for (let ele of infoArr) {
+                if (!data[ele]) {
+                    checkInput = false;
+                    break;
+                }
+            }
+            if (!checkInput) {
                 resolve({
-                    errCode: 1,
-                    errMessage: 'Markdown is not found!'
+                    errCode: -1,
+                    message: 'Missing parameters'
                 })
             }
             else {
-                let objMarkdown = {
-                    contentHTML: data.contentHTML,
-                    contentMarkdown: data.contentMarkdown,
-                    description: data.description ? data.description : ''
-                }
-                await db.Markdown.update(objMarkdown, {
+                let infoMarkdown = await db.Markdown.findOne({
                     where: { doctorId: data.doctorId }
                 })
-                resolve({
-                    errCode: 0,
-                    message: 'OK'
+                let doctor_infos = await db.Doctor_info.findOne({
+                    where: { doctorId: data.doctorId }
                 })
+                if (!infoMarkdown || !doctor_infos) {
+                    resolve({
+                        errCode: 1,
+                        message: 'Markdown is not found!'
+                    })
+                }
+                else {
+                    let objMarkdown = {
+                        contentHTML: data.contentHTML,
+                        contentMarkdown: data.contentMarkdown,
+                        description: data.description ? data.description : ''
+                    }
+                    let objInfos = {
+                        priceId: data.priceId,
+                        provinceId: data.provinceId,
+                        paymentId: data.paymentId,
+                        addressClinic: data.addressClinic,
+                        nameClinic: data.nameClinic,
+                        note: data.note ? data.note : null
+                    }
+                    await db.Markdown.update(objMarkdown, {
+                        where: { doctorId: data.doctorId }
+                    })
+                    await db.Doctor_info.update(objInfos, {
+                        where: { doctorId: data.doctorId }
+                    })
+                    resolve({
+                        errCode: 0,
+                        message: 'OK'
+                    })
+                }
             }
         } catch (error) {
             reject(error);
@@ -169,7 +252,7 @@ let bulkCreateSchedule = async (schedule) => {
                     item.maxNumber = MAX_NUMBER_SCHEDULE;
                     return item;
                 })
-                console.log(schedule);
+                //console.log(schedule);
                 await db.Schedule.destroy({
                     where: { doctorId: schedule[0].doctorId, date: new Date(schedule[0].date) }
                 });
@@ -196,7 +279,7 @@ let getScheduleByDate = (doctorId, date) => {
                 })
             }
             else {
-                console.log("check new date: ", date);
+                //console.log("check new date: ", date);
                 let data = await db.Schedule.findAll({
                     where: { doctorId: doctorId, date: date },
                     include: [
@@ -205,7 +288,7 @@ let getScheduleByDate = (doctorId, date) => {
                     raw: false,
                     nest: true
                 })
-                console.log('check result data: ', data)
+                //console.log('check result data: ', data)
                 if (!data) data = [];
                 resolve({
                     errCode: 0,
@@ -221,5 +304,5 @@ let getScheduleByDate = (doctorId, date) => {
 module.exports = {
     getTopDoctorHome, getAllDoctor, addDoctorInfo,
     getDetailDoctor, updateDoctorInfo, getDoctorMarkdown,
-    bulkCreateSchedule, getScheduleByDate
+    bulkCreateSchedule, getScheduleByDate, getDetailManageDoctor
 }

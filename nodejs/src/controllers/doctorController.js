@@ -30,12 +30,6 @@ class doctorController {
 
     addDoctorInfo = async (req, res) => {
         try {
-            if (!req.body.contentHTML || !req.body.contentMarkdown || !req.body.doctorId) {
-                return res.status(200).json({
-                    errCode: -1,
-                    message: 'Missing parameters'
-                })
-            }
             let data = req.body;
             let result = await doctorService.addDoctorInfo(data);
             return res.status(200).json(result);
@@ -67,18 +61,28 @@ class doctorController {
         }
     }
 
-    updateDoctorInfo = async (req, res) => {
+    getDetailManageDoctor = async (req, res) => {
         try {
-            if (!req.body.contentHTML || !req.body.contentMarkdown || !req.body.doctorId) {
+            if (!req.query.id) {
                 return res.status(200).json({
                     errCode: -1,
                     message: 'Missing parameters'
                 })
             }
+            let data = await doctorService.getDetailManageDoctor(req.query.id);
+            return res.status(200).json(data);
+        } catch (error) {
+            console.log(error);
+            return res.status(200).json({
+                errCode: -1,
+                message: 'Error from server'
+            })
+        }
+    }
+
+    updateDoctorInfo = async (req, res) => {
+        try {
             let result = await doctorService.updateDoctorInfo(req.body);
-            // if(res && res.errCode === 0) {
-            //     return res.status(200).json(res);
-            // }
             return res.status(200).json(result);
         } catch (error) {
             console.log(error);

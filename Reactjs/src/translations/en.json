@@ -90,5 +90,19 @@
             "choose": "Choose",
             "book-free": "and book (Fee for booking is free)"
         }
+    },
+    "admin": {
+        "manage-doctor": {
+            "title": "Create more information for doctors",
+            "select-doctor": "Select doctor",
+            "intro": "Introduction information",
+            "select-price": "Select price",
+            "select-payment": "Select a payment method",
+            "select-province": "Choose a province",
+            "name-clinic": "Name of clinic",
+            "address-clinic": "Address of clinic",
+            "note": "Note",
+            "save-info": "Save information"
+        }
     }
 }

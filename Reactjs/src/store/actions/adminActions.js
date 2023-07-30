@@ -220,17 +220,20 @@ export const addDetailDoctors = (data) => {
                 toast.success('Add detail doctors succeed');
             }
             else {
-                toast.error('Add detail doctors error');
+                // toast.error('Add detail doctors error');
+                toast.error(res.message);
                 dispatch({
                     type: actionTypes.ADD_DETAIL_DOCTORS_FAILED
                 });
             }
+            return res;
         } catch (e) {
             console.log('Add detail doctors error', e);
             toast.error('Add detail doctors error');
             dispatch({
                 type: actionTypes.ADD_DETAIL_DOCTORS_FAILED
             });
+            return false;
         }
     }
 }
@@ -246,17 +249,20 @@ export const updateDetailDoctorInfo = (data) => {
                 toast.success('Save detail doctors succeed');
             }
             else {
-                toast.error('Save detail doctors error');
+                //toast.error('Save detail doctors error');
+                toast.error(res.message);
                 dispatch({
                     type: actionTypes.UPDATE_DETAIL_DOCTORS_FAILED
                 });
             }
+            return res;
         } catch (e) {
             console.log('Save detail doctors error', e);
             toast.error('Save detail doctors error');
             dispatch({
                 type: actionTypes.UPDATE_DETAIL_DOCTORS_FAILED
             });
+            return false;
         }
     }
 }
