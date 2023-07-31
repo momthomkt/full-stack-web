@@ -5,6 +5,7 @@ import './DetailDoctor.scss';
 import { getDetailDoctorService } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils';
 import DoctorSchedule from './DoctorSchedule';
+import DoctorExtraInfo from './DoctorExtraInfo';
 
 class DetailDoctor extends Component {
     constructor(props) {
@@ -40,6 +41,7 @@ class DetailDoctor extends Component {
             contentUpVi = detailDoctor.positionData.valueVi + ', ' + detailDoctor.firstName + ' ' + detailDoctor.lastName;
             contentUpEn = detailDoctor.positionData.valueEn + ', ' + detailDoctor.lastName + ' ' + detailDoctor.firstName;
         }
+        //let charArr = detailDoctor.markDown.description.split("");
         return (
             <div>
                 <HomeHeader isShowBanner={false} />
@@ -56,9 +58,11 @@ class DetailDoctor extends Component {
                                 {detailDoctor && detailDoctor.markDown
                                     && detailDoctor.markDown.description
                                     &&
-                                    <span>
-                                        {detailDoctor.markDown.description}
-                                    </span>
+                                    <>
+                                        {detailDoctor.markDown.description.split('\n').map((item, index) => {
+                                            return index === 0 ? <span>{item}</span> : <><br /><span>{item}</span></>
+                                        })}
+                                    </>
                                 }
                             </div>
                         </div>
@@ -70,7 +74,9 @@ class DetailDoctor extends Component {
                             />
                         </div>
                         <div className="content-right">
-
+                            <DoctorExtraInfo
+                                currDoctorId={detailDoctor.id}
+                            />
                         </div>
                     </div>
                     <div className="detail-info-doctor">
@@ -84,7 +90,7 @@ class DetailDoctor extends Component {
 
                     </div>
                 </div>
-            </div>
+            </div >
         );
     }
 }

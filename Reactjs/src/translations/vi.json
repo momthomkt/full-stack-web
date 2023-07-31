@@ -88,7 +88,14 @@
             "schedule": "Lịch khám",
             "no-schedule": "Không có lịch hẹn trong thời thời gian này. Vui lòng chọn thời gian khác",
             "choose": "Chọn",
-            "book-free": "và đặt (Phí đặt lịch 0đ)"
+            "book-free": "và đặt (Phí đặt lịch 0đ)",
+            "address-title": "ĐỊA CHỈ KHÁM",
+            "price-title": "GIÁ KHÁM:",
+            "mini-price-title": "Giá khám",
+            "view-detail": "Xem chi tiết",
+            "currency-unit": "đ",
+            "patient-payment": "Người bệnh có thể thanh toán bằng hình thức",
+            "hide-price-list": "Ẩn bảng giá"
         }
     },
     "admin": {

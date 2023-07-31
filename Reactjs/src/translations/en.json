@@ -88,7 +88,14 @@
             "schedule": "Examination schedule",
             "no-schedule": "There are no appointments during this time. Please choose another time",
             "choose": "Choose",
-            "book-free": "and book (Fee for booking is free)"
+            "book-free": "and book (Fee for booking is free)",
+            "address-title": "ADDRESS OF EXAMINATION",
+            "price-title": "EXAMINATION PRICE:",
+            "mini-price-title": "Examination price",
+            "view-detail": "View detail",
+            "currency-unit": "$",
+            "patient-payment": "Patients can pay by",
+            "hide-price-list": "Hide price list"
         }
     },
     "admin": {

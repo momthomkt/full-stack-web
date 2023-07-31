@@ -244,6 +244,7 @@ class ManageDoctor extends Component {
         }
         else {
             this.setState({
+                selectedDoctor: selectedDoctor,
                 contentHTML: '',
                 contentMarkdown: '',
                 description: '',

@@ -19,6 +19,7 @@ let initWebRoutes = (app) => {
 
     router.get('/api/allcode', userController.getAllCode);
 
+    /////////////////
     router.get('/api/top-doctor-home', doctorController.getTopDoctorHome);
     router.get('/api/get-all-doctors', doctorController.getAllDoctor);
     router.post('/api/add-doctor-info', doctorController.addDoctorInfo);
@@ -28,7 +29,8 @@ let initWebRoutes = (app) => {
     router.get('/api/get-doctor-markdown', doctorController.getDoctorMarkdown);
     router.post('/api/bulk-create-schedule', doctorController.bulkCreateSchedule);
     router.get('/api/get-schedule-doctor-by-date', doctorController.getScheduleByDate);
-
+    router.get('/api/get-extra-doctor-info-by-id', doctorController.getExtraDoctorInfo);
+    /////////////////
     return app.use("/", router);
 }
 module.exports = initWebRoutes;

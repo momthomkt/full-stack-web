@@ -57,4 +57,8 @@ export const saveBulkScheduleDoctor = (data) => {
 export const getScheduleDoctorByDate = (doctorId, date) => {
     return axios.get(`/api/get-schedule-doctor-by-date?doctorId=${doctorId}&date=${date}`);
 }
+
+export const getExtraDoctorInfoById = (doctorId) => {
+    return axios.get(`/api/get-extra-doctor-info-by-id?id=${doctorId}`);
+}
 // export { handleLoginApi, getAllUsers }; 
