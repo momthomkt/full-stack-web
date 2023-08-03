@@ -1,0 +1,45 @@
+.profile-doctor-container {
+    .intro-doctor {
+        display: flex;
+        margin-bottom: 20px;
+
+        .content-left {
+            //width: 20%;
+            background: center center no-repeat;
+            background-size: cover;
+            height: 120px;
+            width: 120px;
+            border-radius: 50%;
+            margin-top: 5px;
+            //box-sizing: border-box;
+        }
+
+        .content-right {
+            width: calc(100%-120px);
+            display: flex;
+            flex-direction: column;
+            padding-left: 10px;
+
+            .up {
+                padding-top: 15px;
+                font-size: 16px;
+                font-weight: bold;
+                color: #337ab7;
+            }
+
+            .down {
+                padding-top: 10px;
+
+                .name-clinic {
+                    font-weight: 600;
+                }
+
+                .address-clinic {}
+
+                .date-time {
+                    text-transform: capitalize;
+                }
+            }
+        }
+    }
+}

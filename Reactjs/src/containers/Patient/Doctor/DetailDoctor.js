@@ -36,7 +36,7 @@ class DetailDoctor extends Component {
         console.log('detail doctor: ', detailDoctor);
         let { language } = this.props;
         let contentUpVi = '';
-        let contentUpEn = ''
+        let contentUpEn = '';
         if (detailDoctor && detailDoctor.positionData) {
             contentUpVi = detailDoctor.positionData.valueVi + ', ' + detailDoctor.firstName + ' ' + detailDoctor.lastName;
             contentUpEn = detailDoctor.positionData.valueEn + ', ' + detailDoctor.lastName + ' ' + detailDoctor.firstName;

@@ -157,6 +157,19 @@ class doctorController {
         }
     }
 
+    getDoctorIntro = async (req, res) => {
+        try {
+            let result = await doctorService.getDoctorIntro(req.query.id);
+            return res.status(200).json(result);
+        } catch (error) {
+            console.log(error);
+            return res.status(200).json({
+                errCode: -1,
+                message: 'Error from server'
+            });
+        }
+    }
+
 }
 module.exports = new doctorController;
 

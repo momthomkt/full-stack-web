@@ -61,4 +61,17 @@ export const getScheduleDoctorByDate = (doctorId, date) => {
 export const getExtraDoctorInfoById = (doctorId) => {
     return axios.get(`/api/get-extra-doctor-info-by-id?id=${doctorId}`);
 }
+
+export const getProfileDoctorById = (doctorId) => {
+    return axios.get(`/api/get-profile-doctor-by-id?id=${doctorId}`);
+}
+
+export const BookAppointmentService = (data) => {
+    return axios.post('/api/patient-book-appointment', data);
+}
+
+export const verifyBookAppointment = (data) => {
+    return axios.post('/api/verify-book-appointment', data);
+}
+
 // export { handleLoginApi, getAllUsers }; 
