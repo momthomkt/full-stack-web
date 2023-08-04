@@ -45,6 +45,18 @@
 .section-share {
     &.section-specialty {
         background: #f5f5f5;
+
+        .speicalty-child {
+            cursor: pointer;
+
+            .name-specialty {
+                padding-top: 5px;
+
+                &:hover {
+                    color: #45c3d2;
+                }
+            }
+        }
     }
 
     &.section-outstanding-doctor {
@@ -69,9 +81,9 @@
                 background-size: cover;
                 background-color: #eee;
 
-                &.section-specialty {
-                    background-image: url('../../assets/specialty/co-xuong-khop.jpg');
-                }
+                // &.section-specialty {
+                //     background-image: url('../../assets/specialty/co-xuong-khop.jpg');
+                // }
 
                 &.section-medical-facility {
                     background-image: url('../../assets/medical-facility/logo-bv-mat-dnd.jpg');

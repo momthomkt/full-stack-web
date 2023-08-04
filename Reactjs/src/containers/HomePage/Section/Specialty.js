@@ -6,46 +6,58 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import specialtyImg from '../../../assets/specialty/co-xuong-khop.jpg';
-
+import { getAllSpecialty } from '../../../services/userService';
+import { LANGUAGES, path } from '../../../utils';
+import { withRouter } from 'react-router';
 
 class Specialty extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            allSpecialty: []
+        }
+    }
+
+    async componentDidMount() {
+        let response = await getAllSpecialty();
+        if (response && response.errCode === 0) {
+            this.setState({
+                allSpecialty: response.allSpecialty
+            })
+        }
+    }
+
+    handleViewDetailSpecialty = (specialty) => {
+        if (this.props.history) this.props.history.push(path.DETAIL_SPECIALTY.replace(":id", `${specialty.id}`));
+    }
+
     render() {
-        let settings = this.props.settings;
+        let { allSpecialty } = this.state;
+        let { settings, language } = this.props;
 
         return (
             <div className="section-share section-specialty">
                 <div className="section-container">
                     <div className="section-header">
-                        <span className="title-section">Chuyên khoa phổ biến</span>
-                        <button className="btn-section">Xem thêm</button>
+                        <span className="title-section"><FormattedMessage id="homepage.popular-speciality" /></span>
+                        <button className="btn-section"><FormattedMessage id="homepage.more-info" /></button>
                     </div>
                     <div className="section-body">
                         <Slider {...settings}>
-                            <div className="section-customize">
-                                <div className="bg-image section-specialty" />
-                                <div>Cơ xương khớp 1</div>
-                            </div>
-                            <div className="section-customize">
-                                <div className="bg-image section-specialty" />
-                                <div>Cơ xương khớp 2</div>
-                            </div>
-                            <div className="section-customize">
-                                <div className="bg-image section-specialty" />
-                                <div>Cơ xương khớp 3</div>
-                            </div>
-                            <div className="section-customize">
-                                <div className="bg-image section-specialty" />
-                                <div>Cơ xương khớp 4</div>
-                            </div>
-                            <div className="section-customize">
-                                <div className="bg-image section-specialty" />
-                                <div>Cơ xương khớp 5</div>
-                            </div>
-                            <div className="section-customize">
-                                <div className="bg-image section-specialty" />
-                                <div>Cơ xương khớp 6</div>
-                            </div>
+                            {allSpecialty && allSpecialty.length > 0 && allSpecialty.map(ele => {
+                                let imageBase64 = '';
+                                if (ele.image) {
+                                    imageBase64 = new Buffer(ele.image, 'base64').toString('binary');
+                                }
+                                return (
+                                    <div className="section-customize speicalty-child" onClick={() => this.handleViewDetailSpecialty(ele)}>
+                                        <div className="bg-image section-specialty" style={{ backgroundImage: `url(${imageBase64})` }} />
+                                        <div className="name-specialty">{language === LANGUAGES.VI ? ele.nameVi : ele.nameEn}</div>
+                                    </div>
+                                );
+                            })
+                            }
                         </Slider>
                     </div>
                 </div>
@@ -67,4 +79,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Specialty);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Specialty));

@@ -17,7 +17,7 @@ class ManageSchedule extends Component {
         super(props);
         this.state = {
             allDoctors: [],
-            selectedDoctor: {},
+            selectedDoctor: null,
             options: [],
             currentDate: '',
             rangeTime: []
@@ -150,6 +150,7 @@ class ManageSchedule extends Component {
         let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
         console.log('Nguyen Van Tan: ', this.state);
         return (
+
             <div className="manage-shedule-container">
                 <div className="m-s-title">
                     <FormattedMessage id="manage-schedule.title" />
@@ -162,6 +163,7 @@ class ManageSchedule extends Component {
                                 value={selectedDoctor}
                                 onChange={this.handleChangeSelect}
                                 options={options}
+                                isClearable={true}
                             />
                         </div>
                         <div className="col-6">
@@ -192,7 +194,6 @@ class ManageSchedule extends Component {
                                 className="btn btn-primary btn-save-schedule"
                             ><FormattedMessage id="manage-schedule.save-info" /></button>
                         </div>
-
                     </div>
                 </div>
             </div>

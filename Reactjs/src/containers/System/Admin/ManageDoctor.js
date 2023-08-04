@@ -211,36 +211,55 @@ class ManageDoctor extends Component {
         //this.setState({ selectedDoctor });
 
         //let res = await getDetailDoctorService(selectedDoctor.value);
-        let res = await getDetailManageDoctor(selectedDoctor.value);
-        if (res && res.errCode === 0 && res.doctorData && res.doctorData.markDown && res.doctorData.doctorInfos) {
-            let markDown = res.doctorData.markDown;
-            let doctorInfos = res.doctorData.doctorInfos;
+        if (selectedDoctor) {
+            let res = await getDetailManageDoctor(selectedDoctor.value);
+            if (res && res.errCode === 0 && res.doctorData && res.doctorData.markDown && res.doctorData.doctorInfos) {
+                let markDown = res.doctorData.markDown;
+                let doctorInfos = res.doctorData.doctorInfos;
 
-            let selectedPrice = this.state.priceOptions.find((item, index) => {
-                return item.value === doctorInfos.priceId;
-            });
-            let selectedPayment = this.state.paymentOptions.find((item, index) => {
-                return item.value === doctorInfos.paymentId
-            });
-            let selectedProvince = this.state.provinceOptions.find((item, index) => {
-                return item.value === doctorInfos.provinceId
-            });
+                let selectedPrice = this.state.priceOptions.find((item, index) => {
+                    return item.value === doctorInfos.priceId;
+                });
+                let selectedPayment = this.state.paymentOptions.find((item, index) => {
+                    return item.value === doctorInfos.paymentId
+                });
+                let selectedProvince = this.state.provinceOptions.find((item, index) => {
+                    return item.value === doctorInfos.provinceId
+                });
 
-            this.setState({
-                selectedDoctor: selectedDoctor,
-                contentHTML: markDown.contentHTML,
-                contentMarkdown: markDown.contentMarkdown,
-                description: markDown.description,
+                this.setState({
+                    selectedDoctor: selectedDoctor,
+                    contentHTML: markDown.contentHTML,
+                    contentMarkdown: markDown.contentMarkdown,
+                    description: markDown.description,
 
-                selectedPrice: selectedPrice,
-                selectedPayment: selectedPayment,
-                selectedProvince: selectedProvince,
-                addressClinic: doctorInfos.addressClinic,
-                nameClinic: doctorInfos.nameClinic,
-                note: doctorInfos.note,
+                    selectedPrice: selectedPrice,
+                    selectedPayment: selectedPayment,
+                    selectedProvince: selectedProvince,
+                    addressClinic: doctorInfos.addressClinic,
+                    nameClinic: doctorInfos.nameClinic,
+                    note: doctorInfos.note,
 
-                methodSaveDetail: manageActions.EDIT
-            })
+                    methodSaveDetail: manageActions.EDIT
+                })
+            }
+            else {
+                this.setState({
+                    selectedDoctor: selectedDoctor,
+                    contentHTML: '',
+                    contentMarkdown: '',
+                    description: '',
+
+                    selectedPrice: null,
+                    selectedPayment: null,
+                    selectedProvince: null,
+                    addressClinic: '',
+                    nameClinic: '',
+                    note: '',
+
+                    methodSaveDetail: manageActions.CREATE
+                })
+            }
         }
         else {
             this.setState({
@@ -284,6 +303,7 @@ class ManageDoctor extends Component {
                             onChange={this.handleChangeSelectDoctor}
                             options={doctorOptions}
                             placeholder={<FormattedMessage id="admin.manage-doctor.select-doctor" />}
+                            isClearable={true}
                         />
                     </div>
                     <div className="content-right form-group">

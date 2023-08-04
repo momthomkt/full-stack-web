@@ -74,4 +74,11 @@ export const verifyBookAppointment = (data) => {
     return axios.post('/api/verify-book-appointment', data);
 }
 
+export const createSpecialty = (data) => {
+    return axios.post('/api/create-specialty', data);
+}
+
+export const getAllSpecialty = () => {
+    return axios.get('/api/get-all-specialty');
+}
 // export { handleLoginApi, getAllUsers }; 
