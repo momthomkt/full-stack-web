@@ -110,6 +110,43 @@ let getAllSpecialty = () => {
     })
 }
 
+let getOneSpecialty = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // let specialty = await db.Specialty.findOne({
+            //     where: { id: id },
+            //     include: { model: db.Doctor_info, as: 'DoctorInfoData' }
+            //     // { model: db.Doctor_info, as: 'DoctorInfoData', attributes: ['doctorId'] }
+            // })
+            let specialty = await db.Specialty.findOne({
+                where: { id: id },
+                include: [
+                    { model: db.Doctor_info, as: 'arrDoctorData', attributes: ['doctorId'] }
+                ],
+                raw: false,
+                nest: true
+            })
+            if (!specialty) {
+                resolve({
+                    errCode: 1,
+                    message: 'Invalid specialty id',
+                })
+            }
+            else {
+                specialty.image = Buffer.from(specialty.image, 'base64').toString('binary');
+                resolve({
+                    errCode: 0,
+                    message: 'OK',
+                    specialtyData: specialty
+                })
+            }
+            //resolve({})
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
 module.exports = {
-    addSpecialty, getAllSpecialty
+    addSpecialty, getAllSpecialty, getOneSpecialty
 }

@@ -17,36 +17,49 @@ class DoctorExtraInfo extends Component {
             priceEn: '',
             paymentVi: '',
             paymentEn: '',
-            provinceVi: '',
-            provinceEn: '',
-            nameClinic: '',
+            nameClinicVi: '',
+            nameClinicEn: '',
             addressClinic: '',
             note: '',
         }
     }
 
     componentDidMount() {
-
+        if (this.props.currDoctorId) {
+            this.getExtraDoctorInfo(this.props.currDoctorId);
+        }
     }
 
-    async componentDidUpdate(prevProps, prevState) {
-        if (prevProps.language !== this.props.language) {
-
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.currDoctorId !== this.props.currDoctorId) {
+            this.getExtraDoctorInfo(this.props.currDoctorId);
         }
-        if (prevProps.currDoctorId !== this.props.currDoctorId || prevProps.language !== this.props.language) {
-            let res = await getExtraDoctorInfoById(this.props.currDoctorId);
-            if (res && res.errCode === 0 && res.data) {
-                let doctorData = res.data;
+    }
+
+    getExtraDoctorInfo = async (currDoctorId) => {
+        let res = await getExtraDoctorInfoById(currDoctorId);
+        if (res && res.errCode === 0 && res.data) {
+            let doctorData = res.data;
+            this.setState({
+                note: doctorData.note
+            })
+            if (doctorData.priceTypeData) {
                 this.setState({
                     priceVi: doctorData.priceTypeData.valueVi,
                     priceEn: doctorData.priceTypeData.valueEn,
+                })
+            }
+            if (doctorData.paymentTypeData) {
+                this.setState({
                     paymentVi: doctorData.paymentTypeData.valueVi,
                     paymentEn: doctorData.paymentTypeData.valueEn,
-                    provinceVi: doctorData.provinceTypeData.valueVi,
-                    provinceEn: doctorData.provinceTypeData.valueEn,
-                    nameClinic: doctorData.nameClinic,
-                    addressClinic: doctorData.addressClinic,
-                    note: doctorData.note,
+                })
+            }
+            if (doctorData.clinicData) {
+                this.setState({
+                    nameClinicVi: doctorData.clinicData.nameVi,
+                    nameClinicEn: doctorData.clinicData.nameEn,
+                    addressClinic: doctorData.clinicData.address,
                 })
             }
         }
@@ -60,14 +73,14 @@ class DoctorExtraInfo extends Component {
 
     render() {
         let { isShowDetailPrice, priceVi, priceEn, paymentEn, paymentVi,
-            provinceVi, provinceEn, nameClinic, addressClinic, note
+            provinceVi, provinceEn, nameClinicVi, nameClinicEn, addressClinic, note
         } = this.state;
         let { language } = this.props;
         return (
             <div className="doctor-extra-info-container">
                 <div className="content-up">
                     <div className="text-address"><FormattedMessage id="patient.detail-doctor.address-title" /></div>
-                    <div className="name-clinic">{nameClinic}</div>
+                    <div className="name-clinic">{language === LANGUAGES.VI ? nameClinicVi : nameClinicEn}</div>
                     <div className="address-clinic">{addressClinic}</div>
                 </div>
                 <div className="content-down">

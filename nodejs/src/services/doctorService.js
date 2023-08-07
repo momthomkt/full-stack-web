@@ -52,7 +52,7 @@ let getAllDoctor = () => {
 let addDoctorInfo = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let infoArr = ['contentHTML', 'contentMarkdown', 'doctorId', 'priceId', 'provinceId', 'paymentId', 'addressClinic', 'nameClinic'];
+            let infoArr = ['contentHTML', 'contentMarkdown', 'doctorId', 'specialtyId', 'clinicId', 'priceId', 'paymentId'];
             let checkInput = true;
             for (let ele of infoArr) {
                 if (!data[ele]) {
@@ -69,20 +69,17 @@ let addDoctorInfo = (data) => {
             else {
                 await db.Doctor_info.create({
                     doctorId: data.doctorId,
+                    specialtyId: data.specialtyId,
+                    clinicId: data.clinicId,
                     priceId: data.priceId,
-                    provinceId: data.provinceId,
                     paymentId: data.paymentId,
-                    addressClinic: data.addressClinic,
-                    nameClinic: data.nameClinic,
                     note: data.note ? data.note : null
                 })
                 await db.Markdown.create({
                     contentHTML: data.contentHTML,
                     contentMarkdown: data.contentMarkdown,
                     description: data.description,
-                    doctorId: data.doctorId,
-                    // specialtyId: data.specialtyId,
-                    // clinicId: data.clinicId
+                    doctorId: data.doctorId
                 });
                 resolve({
                     errCode: 0,
@@ -162,7 +159,7 @@ let getDetailManageDoctor = (id) => {
 let updateDoctorInfo = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let infoArr = ['contentHTML', 'contentMarkdown', 'doctorId', 'priceId', 'provinceId', 'paymentId', 'addressClinic', 'nameClinic'];
+            let infoArr = ['contentHTML', 'contentMarkdown', 'doctorId', 'specialtyId', 'clinicId', 'priceId', 'paymentId'];
             let checkInput = true;
             for (let ele of infoArr) {
                 if (!data[ele]) {
@@ -186,7 +183,7 @@ let updateDoctorInfo = (data) => {
                 if (!infoMarkdown || !doctor_infos) {
                     resolve({
                         errCode: 1,
-                        message: 'Markdown is not found!'
+                        message: 'Markdown or doctorInfos is not found!'
                     })
                 }
                 else {
@@ -196,11 +193,10 @@ let updateDoctorInfo = (data) => {
                         description: data.description ? data.description : ''
                     }
                     let objInfos = {
+                        specialtyId: data.specialtyId,
+                        clinicId: data.clinicId,
                         priceId: data.priceId,
-                        provinceId: data.provinceId,
                         paymentId: data.paymentId,
-                        addressClinic: data.addressClinic,
-                        nameClinic: data.nameClinic,
                         note: data.note ? data.note : null
                     }
                     await db.Markdown.update(objMarkdown, {
@@ -320,7 +316,8 @@ let getExtraDoctorInfo = (id) => {
                     include: [
                         { model: db.Allcode, as: 'priceTypeData', attributes: ['valueEn', 'valueVi'] },
                         { model: db.Allcode, as: 'paymentTypeData', attributes: ['valueEn', 'valueVi'] },
-                        { model: db.Allcode, as: 'provinceTypeData', attributes: ['valueEn', 'valueVi'] }
+                        //{ model: db.Allcode, as: 'provinceTypeData', attributes: ['valueEn', 'valueVi'] }
+                        { model: db.Clinic, as: 'clinicData', attributes: ['nameVi', 'nameVi', 'provinceId', 'address'] }
                     ],
                     raw: false,
                     nest: true
@@ -366,7 +363,7 @@ let getDoctorIntro = (doctorId) => {
                             include: [
                                 { model: db.Allcode, as: 'priceTypeData', attributes: ['valueEn', 'valueVi'] },
                                 { model: db.Allcode, as: 'paymentTypeData', attributes: ['valueEn', 'valueVi'] },
-                                { model: db.Allcode, as: 'provinceTypeData', attributes: ['valueEn', 'valueVi'] },
+                                { model: db.Clinic, as: 'clinicData', attributes: ['nameVi', 'nameEn', 'provinceId', 'address'] },
                             ]
                         },
                     ],

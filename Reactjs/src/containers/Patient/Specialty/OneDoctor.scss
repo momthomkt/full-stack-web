@@ -1,0 +1,95 @@
+.one-doctor-container {
+
+    .intro-doctor {
+        //margin: 0 180px;
+        display: flex;
+        margin-bottom: 20px;
+        padding: 15px;
+
+        @media (min-width: 900px) {
+            width: 53%;
+        }
+
+        @media (min-width: 760px) {
+            float: left;
+            width: 53%;
+            border-right: 1px solid #eee;
+            padding-right: 10px;
+        }
+
+        .content-left {
+            .avatar {
+                @media (min-width: 768px) {
+                    width: 120px;
+                    height: 120px;
+                }
+
+                width: 20%;
+                background: center center no-repeat;
+                background-size: cover;
+                height: 100px;
+                width: 100px;
+                border-radius: 50%;
+                margin: 10px 0;
+            }
+
+            .view-more-doctor-info {
+                //justify-content: center;
+                text-align: center;
+                color: #45c3d2;
+
+                span {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .content-right {
+            width: 80%;
+            //border: 1px solid grey;
+            display: flex;
+            flex-direction: column;
+            padding-left: 10px;
+
+            .up {
+                padding-top: 15px;
+                font-size: 20px;
+                font-weight: 600;
+            }
+
+            .down {
+                padding-top: 10px;
+            }
+        }
+    }
+
+    .exam-info {
+        width: 100%;
+
+        @media (min-width: 900px) {
+            width: 47%;
+        }
+
+        @media (min-width: 760px) {
+            width: 47%;
+            float: left;
+            padding: 0;
+            margin: 0;
+        }
+
+        .content-up-schedule {
+            //text-transform: uppercase;
+            //font-weight: bold;
+            //padding: 15px;
+            margin: 0;
+            margin-left: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .content-down-exrta-info {
+            margin-left: 15px;
+            padding-top: 15px;
+        }
+    }
+}

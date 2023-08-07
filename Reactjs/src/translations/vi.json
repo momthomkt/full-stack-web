@@ -97,6 +97,11 @@
             "currency-unit": "đ",
             "patient-payment": "Người bệnh có thể thanh toán bằng hình thức",
             "hide-price-list": "Ẩn bảng giá"
+        },
+        "detail-specialty": {
+            "read-more": "Đọc thêm",
+            "see-more": "Xem thêm",
+            "hide": "Ẩn bớt"
         }
     },
     "admin": {

@@ -8,6 +8,11 @@
         margin-bottom: 20px;
 
         .content-left {
+            @media (min-width: 768px) {
+                width: 120px;
+                height: 120px;
+            }
+
             width: 20%;
             background: center center no-repeat;
             background-size: cover;
@@ -44,10 +49,12 @@
 
         .content-left {
             width: 50%;
+            border-right: 1px solid #ddd;
         }
 
         .content-right {
             width: 50%;
+            margin-left: 15px;
         }
     }
 

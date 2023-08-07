@@ -11,13 +11,17 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            Clinic.belongsTo(models.Doctor_info, { foreignKey: 'id', targetKey: 'clinicId', as: 'DoctorInfoData' })
         }
     };
     Clinic.init({
-        name: DataTypes.STRING,
-        description: DataTypes.TEXT,
+        nameVi: DataTypes.STRING,
+        nameEn: DataTypes.STRING,
+        provinceId: DataTypes.STRING,
+        desHTML: DataTypes.TEXT('long'),
+        desMarkdown: DataTypes.TEXT('long'),
         address: DataTypes.STRING,
-        image: DataTypes.STRING
+        image: DataTypes.BLOB('long'),
     }, {
         sequelize,
         modelName: 'Clinic',

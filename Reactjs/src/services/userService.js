@@ -81,4 +81,12 @@ export const createSpecialty = (data) => {
 export const getAllSpecialty = () => {
     return axios.get('/api/get-all-specialty');
 }
+
+export const getAllClinic = () => {
+    return axios.get('/api/get-all-clinic');
+}
+
+export const getOneSpecialty = (id) => {
+    return axios.get(`/api/get-one-specialty?id=${id}`);
+}
 // export { handleLoginApi, getAllUsers }; 

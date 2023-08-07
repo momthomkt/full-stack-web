@@ -1,0 +1,107 @@
+.detail-specialty-container {
+
+    .container-desciption {
+        //background: #fff;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+
+        .content-desciption {
+            padding: 10px 0;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 1));
+
+            .cover-area {
+                padding-right: 15px;
+                padding-left: 15px;
+                margin-right: auto;
+                margin-left: auto;
+
+                @media (min-width: 768px) {
+                    width: 750px;
+                }
+
+                @media (min-width: 992px) {
+                    width: 970px;
+                }
+
+                @media (min-width: 1200px) {
+                    width: 1170px;
+                }
+
+                .title-name-specialty {
+                    padding: 15px 0;
+                }
+
+                .description-container {
+                    .description {
+                        // max-height: 90px;
+                        // overflow: hidden;
+                    }
+
+                    .show-des {
+                        cursor: pointer;
+                        font-size: 14px;
+                        color: #288ad6;
+                        padding-top: 5px;
+                    }
+
+                    .hide-des {
+                        cursor: pointer;
+                        font-size: 14px;
+                        color: #288ad6;
+                        padding-top: 5px;
+                    }
+                }
+            }
+        }
+    }
+
+    .body-content {
+        background-color: #eeeeee;
+
+
+        .cover-area {
+            //background-color: brown;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+
+            @media (min-width: 768px) {
+                width: 750px;
+            }
+
+            @media (min-width: 992px) {
+                width: 970px;
+            }
+
+            @media (min-width: 1200px) {
+                width: 1170px;
+            }
+
+            .select-province {
+                select {
+                    cursor: pointer;
+                    display: block;
+                    padding: 0.65rem 0.75rem 0.65rem 0.75rem;
+                    font-size: 1rem;
+                    font-weight: 400;
+                    line-height: 1.5;
+                    color: #212529;
+                    vertical-align: middle;
+                    border: 1px solid #ced4da;
+                    border-radius: 0.25rem;
+                    outline: none;
+                }
+            }
+
+            .doctor-in-specialty {
+                display: flex;
+                background-color: #fff;
+                box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28) !important;
+                border-radius: 8px;
+                margin-bottom: 10px;
+            }
+        }
+    }
+}

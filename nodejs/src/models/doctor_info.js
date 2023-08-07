@@ -15,16 +15,17 @@ module.exports = (sequelize, DataTypes) => {
 
             Doctor_info.belongsTo(models.Allcode, { foreignKey: 'priceId', targetKey: 'keyMap', as: 'priceTypeData' })
             Doctor_info.belongsTo(models.Allcode, { foreignKey: 'paymentId', targetKey: 'keyMap', as: 'paymentTypeData' })
-            Doctor_info.belongsTo(models.Allcode, { foreignKey: 'provinceId', targetKey: 'keyMap', as: 'provinceTypeData' })
+            Doctor_info.hasOne(models.Clinic, { foreignKey: 'id', as: 'clinicData' })
+
+            Doctor_info.belongsTo(models.Specialty, { foreignKey: 'specialtyId', targetKey: 'id', as: 'specialtyData' })
         }
     };
     Doctor_info.init({
         doctorId: DataTypes.INTEGER,
+        clinicId: DataTypes.INTEGER,
+        specialtyId: DataTypes.INTEGER,
         priceId: DataTypes.STRING,
-        provinceId: DataTypes.STRING,
         paymentId: DataTypes.STRING,
-        addressClinic: DataTypes.STRING,
-        nameClinic: DataTypes.STRING,
         note: DataTypes.STRING,
         count: DataTypes.INTEGER,
     }, {

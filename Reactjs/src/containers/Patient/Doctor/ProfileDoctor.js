@@ -43,13 +43,13 @@ class ProfileDoctor extends Component {
     }
 
     renderAppointmentIinfo = (dataProFile, dataTime, language) => {
-        if (dataProFile && dataTime && dataProFile.doctorInfos) {
+        if (dataProFile && dataTime && dataProFile.doctorInfos && dataProFile.doctorInfos.clinicData) {
             let dateTimeVi = dataTime.timeTypeData.valueVi + ' - ' + moment(dataTime.date).format('dddd - DD/MM/YYYY');
             let dateTimeEn = dataTime.timeTypeData.valueEn + ' - ' + moment(dataTime.date).locale('en').format('dddd - DD/MM/YYYY');
             return (
                 <>
-                    <div className="name-clinic">{dataProFile.doctorInfos.nameClinic}</div>
-                    <div className="address-clinic">{dataProFile.doctorInfos.addressClinic}</div>
+                    <div className="name-clinic">{language === LANGUAGES.VI ? dataProFile.doctorInfos.clinicData.nameVi : dataProFile.doctorInfos.clinicData.nameEn}</div>
+                    <div className="address-clinic">{dataProFile.doctorInfos.clinicData.address}</div>
                     <div className="date-time">{language === LANGUAGES.VI ? dateTimeVi : dateTimeEn}</div>
                 </>
             );

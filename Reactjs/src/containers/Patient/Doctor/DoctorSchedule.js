@@ -20,12 +20,48 @@ class DoctorSchedule extends Component {
         }
     }
 
-    componentDidMount() {
-        let { language } = this.props;
-
+    async componentDidMount() {
+        if (this.props.language) {
+            await this.builOptionDayOfWeek(this.props.language);
+        }
+        if (this.props.currDoctorId && this.state.allDayOptions[0]) {
+            this.getScheduleDoctor(this.props.currDoctorId);
+        }
         //console.log('moment vi: ', moment(new Date()).format('dddd - DD/MM'));
         //console.log('moment vi: ', moment(new Date()).locale('en').format('dddd - DD/MM'));
+    }
 
+    async componentDidUpdate(prevProps, prevState) {
+        if (prevProps.language !== this.props.language) {
+            let lastallDayOptions = this.state.allDayOptions.map((item, index) => {
+                if (this.props.language === LANGUAGES.VI) {
+                    if (index === 0) {
+                        let ddMM = moment(new Date()).format('DD/MM');
+                        let today = `Hôm nay - ${ddMM}`;
+                        item.label = today;
+                    }
+                    else item.label = moment(new Date()).add(index, 'days').format('dddd - DD/MM');
+                }
+                else {
+                    if (index === 0) {
+                        let ddMM = moment(new Date()).format('DD/MM');
+                        let today = `Today - ${ddMM}`;
+                        item.label = today;
+                    }
+                    else item.label = moment(new Date()).add(index, 'days').locale('en').format('dddd - DD/MM');
+                }
+                return item;
+            })
+            this.setState({
+                allDayOptions: lastallDayOptions
+            })
+        }
+        if (prevProps.currDoctorId !== this.props.currDoctorId && this.state.allDayOptions[0]) {
+            this.getScheduleDoctor(this.props.currDoctorId);
+        }
+    }
+
+    builOptionDayOfWeek = (language) => {
         let allDayOptions = [];
         for (let i = 0; i < 7; i++) {
             let obj = {};
@@ -54,37 +90,11 @@ class DoctorSchedule extends Component {
         })
     }
 
-    async componentDidUpdate(prevProps, prevState) {
-        if (prevProps.language !== this.props.language) {
-            let lastallDayOptions = this.state.allDayOptions.map((item, index) => {
-                if (this.props.language === LANGUAGES.VI) {
-                    if (index === 0) {
-                        let ddMM = moment(new Date()).format('DD/MM');
-                        let today = `Hôm nay - ${ddMM}`;
-                        item.label = today;
-                    }
-                    else item.label = moment(new Date()).add(index, 'days').format('dddd - DD/MM');
-                }
-                else {
-                    if (index === 0) {
-                        let ddMM = moment(new Date()).format('DD/MM');
-                        let today = `Today - ${ddMM}`;
-                        item.label = today;
-                    }
-                    else item.label = moment(new Date()).add(index, 'days').locale('en').format('dddd - DD/MM');
-                }
-                return item;
-            })
-            this.setState({
-                allDayOptions: lastallDayOptions
-            })
-        }
-        if (prevProps.currDoctorId !== this.props.currDoctorId) {
-            let response = await getScheduleDoctorByDate(this.props.currDoctorId, new Date(this.state.allDayOptions[0].value).toISOString());
-            this.setState({
-                allAvailableTime: response.data ? response.data : []
-            })
-        }
+    getScheduleDoctor = async (currDoctorId) => {
+        let response = await getScheduleDoctorByDate(currDoctorId, new Date(this.state.allDayOptions[0].value).toISOString());
+        this.setState({
+            allAvailableTime: response.data ? response.data : []
+        })
     }
 
     handleOnChangeSelectDay = async (event) => {
