@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            Clinic.belongsTo(models.Doctor_info, { foreignKey: 'id', targetKey: 'clinicId', as: 'DoctorInfoData' })
+            //Clinic.belongsTo(models.Doctor_info, { foreignKey: 'id', targetKey: 'clinicId', as: 'DoctorInfoData' })
+            Clinic.hasMany(models.Doctor_info, { foreignKey: 'clinicId', as: 'arrDoctorData' })
         }
     };
     Clinic.init({

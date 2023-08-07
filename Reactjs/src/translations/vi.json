@@ -102,6 +102,11 @@
             "read-more": "Đọc thêm",
             "see-more": "Xem thêm",
             "hide": "Ẩn bớt"
+        },
+        "detail-clinic": {
+            "read-more": "Đọc thêm",
+            "see-more": "Xem thêm",
+            "hide": "Ẩn bớt"
         }
     },
     "admin": {

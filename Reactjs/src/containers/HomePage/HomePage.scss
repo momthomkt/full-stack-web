@@ -59,6 +59,20 @@
         }
     }
 
+    &.section-medical-facility {
+        .clinic-child {
+            cursor: pointer;
+
+            .name-clinic {
+                padding-top: 5px;
+
+                &:hover {
+                    color: #45c3d2;
+                }
+            }
+        }
+    }
+
     &.section-outstanding-doctor {
         background: #f5f5f5;
     }
@@ -72,22 +86,21 @@
 
     .section-body {
         .section-customize {
-
             .bg-image {
+
                 width: 278px;
                 height: 150px;
                 background-position: center center;
                 background-repeat: no-repeat;
                 background-size: cover;
                 background-color: #eee;
-
+                object-fit: contain !important;
                 // &.section-specialty {
                 //     background-image: url('../../assets/specialty/co-xuong-khop.jpg');
                 // }
 
-                &.section-medical-facility {
-                    background-image: url('../../assets/medical-facility/logo-bv-mat-dnd.jpg');
-                }
+                // &.section-medical-facility {
+                // }
 
                 &.section-outstanding-doctor {
                     //background-image: url('../../assets/outstanding-doctor/anh-dai-dien-bs.jpg');

@@ -102,6 +102,11 @@
             "read-more": "Read more",
             "see-more": "See more",
             "hide": "Hide"
+        },
+        "detail-clinic": {
+            "read-more": "Read more",
+            "see-more": "See more",
+            "hide": "Hide"
         }
     },
     "admin": {

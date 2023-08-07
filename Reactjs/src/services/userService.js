@@ -82,11 +82,19 @@ export const getAllSpecialty = () => {
     return axios.get('/api/get-all-specialty');
 }
 
+export const getOneSpecialty = (id) => {
+    return axios.get(`/api/get-one-specialty?id=${id}`);
+}
+
+export const createClinic = (data) => {
+    return axios.post('/api/create-clinic', data);
+}
+
 export const getAllClinic = () => {
     return axios.get('/api/get-all-clinic');
 }
 
-export const getOneSpecialty = (id) => {
-    return axios.get(`/api/get-one-specialty?id=${id}`);
+export const getOneClinic = (id) => {
+    return axios.get(`/api/get-one-clinic?id=${id}`);
 }
 // export { handleLoginApi, getAllUsers }; 

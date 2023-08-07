@@ -1,14 +1,17 @@
-.detail-specialty-container {
+.detail-clinic-container {
 
     .container-desciption {
         //background: #fff;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
 
         .content-desciption {
             padding: 10px 0;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 1));
+
+            .img-clinic {
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+                aspect-ratio: 4.8;
+            }
 
             .cover-area {
                 padding-right: 15px;
@@ -28,7 +31,7 @@
                     width: 1170px;
                 }
 
-                .title-name-specialty {
+                .title-name-clinic {
                     padding: 15px 0;
                 }
 
@@ -94,7 +97,7 @@
                 }
             }
 
-            .doctor-in-specialty {
+            .doctor-in-clinic {
                 display: flex;
                 background-color: #fff;
                 box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28) !important;
