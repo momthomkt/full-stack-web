@@ -36,7 +36,7 @@ class BookingModal extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchAllCodeStartRedux('gender');
+        this.props.fetchAllCodeStartRedux('GENDER');
     }
 
     async componentDidUpdate(prevProps, prevState) {
@@ -316,7 +316,7 @@ class BookingModal extends Component {
 const mapStateToProps = state => {
     return {
         language: state.app.language,
-        genders: state.admin.genders
+        genders: state.admin.GENDERs
     };
 };
 

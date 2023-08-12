@@ -1,24 +1,24 @@
 import actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    genders: [],
-    roles: [],
-    positions: [],
-    isLoading_gender: false,
-    isLoading_role: false,
-    isLoading_position: false,
+    GENDERs: [],
+    ROLEs: [],
+    POSITIONs: [],
+    isLoading_GENDER: false,
+    isLoading_ROLE: false,
+    isLoading_POSITION: false,
     users: [],
     topDoctors: [],
     allDoctors: [],
     //
     allScheduleTime: [],
     //
-    prices: [],
-    payments: [],
-    provinces: [],
-    isLoading_price: false,
-    isLoading_payment: false,
-    isLoading_province: false,
+    PRICEs: [],
+    PAYMENTs: [],
+    PROVINCEs: [],
+    isLoading_PRICE: false,
+    isLoading_PAYMENT: false,
+    isLoading_PROVINCE: false,
 
 }
 
@@ -37,6 +37,7 @@ const adminReducer = (state = initialState, action) => {
             // return {
             //     ...state
             // }
+            console.log('check action.data: ', action.data);
             state[action.typeInput + 's'] = action.data;
             state['isLoading_' + action.typeInput] = false;
             return {

@@ -49,8 +49,8 @@ class ManageDoctor extends Component {
 
     async componentDidMount() {
         this.props.fetchAllDoctorsRedux();
-        this.props.fetchAllCodeStartRedux('price');
-        this.props.fetchAllCodeStartRedux('payment');
+        this.props.fetchAllCodeStartRedux('PRICE');
+        this.props.fetchAllCodeStartRedux('PAYMENT');
         let resClinic = await getAllClinic();
         if (resClinic && resClinic.errCode === 0 && resClinic.allClinic && resClinic.allClinic.length > 0) {
             let clinicOptions = this.buildOptions(resClinic.allClinic);
@@ -420,8 +420,8 @@ const mapStateToProps = state => {
     return {
         language: state.app.language,
         allDoctors: state.admin.allDoctors,
-        listPrice: state.admin.prices,
-        listPayment: state.admin.payments
+        listPrice: state.admin.PRICEs,
+        listPayment: state.admin.PAYMENTs
     };
 };
 

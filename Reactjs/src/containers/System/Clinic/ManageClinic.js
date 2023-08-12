@@ -36,7 +36,7 @@ class ManageClinic extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchAllCodeStartRedux('province');
+        this.props.fetchAllCodeStartRedux('PROVINCE');
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -209,7 +209,7 @@ class ManageClinic extends Component {
 const mapStateToProps = state => {
     return {
         language: state.app.language,
-        listProvince: state.admin.provinces
+        listProvince: state.admin.PROVINCEs
     };
 };
 

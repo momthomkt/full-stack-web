@@ -37,24 +37,10 @@ class UserRedux extends Component {
 
     async componentDidMount() {
 
-        this.props.getAllCodeStart('gender');
-        this.props.getAllCodeStart('role');
-        this.props.getAllCodeStart('position');
+        this.props.getAllCodeStart('GENDER');
+        this.props.getAllCodeStart('ROLE');
+        this.props.getAllCodeStart('POSITION');
 
-        // try {
-        //     let gender = await getAllCodeService('gender');
-        //     let position = await getAllCodeService('position');
-        //     let role = await getAllCodeService('role');
-        //     if (gender && position && role && gender.errCode === 0 && position.errCode === 0 && role.errCode === 0) {
-        //         this.setState({
-        //             genderArr: gender.data,
-        //             positionArr: position.data,
-        //             roleArr: role.data
-        //         })
-        //     }
-        // } catch (e) {
-        //     console.log(e)
-        // }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -210,7 +196,8 @@ class UserRedux extends Component {
         let language = this.props.language;
         let { email, password, firstName, lastName, phoneNumber, address, gender, position, role } = this.state.userInfo;
         let avatar = this.state.avatar;
-        console.log('check info render: ', gender, position, role)
+        console.log('check info render: ', gender, position, role);
+        console.log('check props redux: ', this.props['gender' + 'Redux']);
         return (
             <div className="user-redux-container">
                 <div className="title" >
@@ -370,9 +357,9 @@ class UserRedux extends Component {
 const mapStateToProps = state => {
     return {
         language: state.app.language,
-        genderRedux: state.admin.genders,
-        positionRedux: state.admin.positions,
-        roleRedux: state.admin.roles
+        genderRedux: state.admin.GENDERs,
+        positionRedux: state.admin.POSITIONs,
+        roleRedux: state.admin.ROLEs
     };
 };
 
