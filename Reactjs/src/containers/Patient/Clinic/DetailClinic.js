@@ -84,8 +84,8 @@ class DetailClinic extends Component {
                                 <option>Hồ Chí Minh</option>
                             </select>
                         </div>
-                        {clinicData && clinicData.arrDoctorData && clinicData.arrDoctorData.length > 0 && clinicData.arrDoctorData.map(doctor => {
-                            return (<div className="doctor-in-clinic">
+                        {clinicData && clinicData.arrDoctorData && clinicData.arrDoctorData.length > 0 && clinicData.arrDoctorData.map((doctor, index) => {
+                            return (<div key={index} className="doctor-in-clinic">
                                 <OneDoctor
                                     doctorId={doctor.doctorId}
                                 />

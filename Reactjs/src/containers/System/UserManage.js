@@ -28,8 +28,6 @@ class UserManage extends Component {
         if (response && response.errCode === 0) {
             this.setState({
                 arrUsers: response.users
-            }, () => {
-                console.log('get user from nodejs: ', this.state.arrUsers);
             })
         }
     }

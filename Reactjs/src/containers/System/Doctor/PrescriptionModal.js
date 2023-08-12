@@ -43,7 +43,6 @@ class PrescriptionModal extends Component {
         let file = event.target.files[0];
 
         if (file) {
-            console.log('check file: ', file)
             let base64 = await CommonUtils.getBase64(file);
             this.setState({
                 fileImgBase64: base64,
@@ -53,7 +52,6 @@ class PrescriptionModal extends Component {
     }
 
     handleSendPrescription = async () => {
-        console.log('check fileImgBase64: ', this.state.fileImgBase64);
         if (!this.state.email || !this.state.fileImgBase64) {
             alert(this.props.language === LANGUAGES.VI ? 'Hãy nhập hết các trường thông tin được yêu cầu' : 'Please enter all required information fields')
         }

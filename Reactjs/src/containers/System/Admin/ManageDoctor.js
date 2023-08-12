@@ -177,7 +177,6 @@ class ManageDoctor extends Component {
                 paymentId: this.state.selectedPayment.value,
                 note: this.state.note
             }
-            console.log('check data: ', data);
             let res = null;
             if (this.state.methodSaveDetail === manageActions.CREATE) {
                 res = await this.props.addDetailDoctorsRedux(data);
@@ -185,9 +184,7 @@ class ManageDoctor extends Component {
             else if (this.state.methodSaveDetail === manageActions.EDIT) {
                 res = await this.props.updateDetailDoctorInfoRedux(data);
             }
-            console.log('check res: ', res);
             if (res && res.errCode === 0) {
-                console.log('aloalo123');
                 this.setState({
                     contentMarkdown: '',
                     contentHTML: '',

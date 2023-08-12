@@ -52,7 +52,7 @@ class OutStandingDoctor extends Component {
                                         imageBase64 = new Buffer(item.image, 'base64').toString('binary');
                                     }
                                     return (
-                                        <div className="section-customize" onClick={() => this.handleViewDetailDoctor(item)}>
+                                        <div key={index} className="section-customize" onClick={() => this.handleViewDetailDoctor(item)}>
                                             <div className="customize-border">
                                                 <div className="outer-bg">
                                                     <div className="bg-image section-outstanding-doctor" style={{ backgroundImage: `url(${imageBase64})` }} />

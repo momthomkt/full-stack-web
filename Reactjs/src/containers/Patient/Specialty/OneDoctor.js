@@ -75,7 +75,7 @@ class OneDoctor extends Component {
                                 <>
                                     {detailDoctor.markDown.description.split('\n').map((item, index) => {
                                         // return index === 0 ? <div>{item}</div> : <><br /><div>{item}</div></>
-                                        return <div>{item}</div>
+                                        return <div key={index}>{item}</div>
                                     })}
                                 </>
                             }

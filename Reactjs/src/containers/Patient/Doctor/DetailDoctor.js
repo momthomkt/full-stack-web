@@ -35,7 +35,6 @@ class DetailDoctor extends Component {
 
     render() {
         let { detailDoctor } = this.state;
-        console.log('detail doctor: ', detailDoctor);
         let { language } = this.props;
         let contentUpVi = '';
         let contentUpEn = '';
@@ -64,7 +63,7 @@ class DetailDoctor extends Component {
                                     &&
                                     <>
                                         {detailDoctor.markDown.description.split('\n').map((item, index) => {
-                                            return index === 0 ? <span>{item}</span> : <><br /><span>{item}</span></>
+                                            return index === 0 ? <span key={index}>{item}</span> : <span key={index}><br /><span>{item}</span></span>
                                         })}
                                     </>
                                 }

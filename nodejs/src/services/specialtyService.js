@@ -4,7 +4,6 @@ import { Op } from 'sequelize';
 let addSpecialty = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log('check data.contentMarkDown: ', data.contentMarkdown);
             let arrInut = ['nameVi', 'nameEn', 'image', 'contentHTML', 'contentMarkdown']
             let isValid = true;
             for (let ele of arrInut) {

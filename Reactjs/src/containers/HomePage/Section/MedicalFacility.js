@@ -43,13 +43,13 @@ class MedicalFacility extends Component {
                     </div>
                     <div className="section-body">
                         <Slider {...settings}>
-                            {allClinic && allClinic.length > 0 && allClinic.map(currClinic => {
+                            {allClinic && allClinic.length > 0 && allClinic.map((currClinic, index) => {
                                 let imageBase64 = '';
                                 if (currClinic.image) {
                                     imageBase64 = new Buffer(currClinic.image, 'base64').toString('binary');
                                 }
                                 return (
-                                    <div className="section-customize clinic-child" onClick={() => this.handleViewDetailClinic(currClinic.id)}>
+                                    <div key={index} className="section-customize clinic-child" onClick={() => this.handleViewDetailClinic(currClinic.id)}>
                                         <div className="bg-image section-medical-facility" style={{ backgroundImage: `url(${imageBase64})` }} />
                                         <div className="name-clinic">{language === LANGUAGES.VI ? currClinic.nameVi : currClinic.nameEn}</div>
                                     </div>

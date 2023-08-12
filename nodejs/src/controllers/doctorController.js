@@ -120,7 +120,6 @@ class doctorController {
             //         message: 'Missing input parameter'
             //     });
             // }
-            console.log('check body bulk: ', req.body)
             let result = await doctorService.bulkCreateSchedule(req.body);
             return res.status(200).json(result);
         } catch (error) {

@@ -196,8 +196,6 @@ class UserRedux extends Component {
         let language = this.props.language;
         let { email, password, firstName, lastName, phoneNumber, address, gender, position, role } = this.state.userInfo;
         let avatar = this.state.avatar;
-        console.log('check info render: ', gender, position, role);
-        console.log('check props redux: ', this.props['gender' + 'Redux']);
         return (
             <div className="user-redux-container">
                 <div className="title" >

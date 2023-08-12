@@ -4,7 +4,6 @@ import { Op } from 'sequelize';
 let addClinic = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log('check data.contentMarkDown: ', data.contentMarkdown);
             let arrInut = ['nameVi', 'nameEn', 'image', 'address', 'provinceId', 'contentHTML', 'contentMarkdown']
             let isValid = true;
             for (let ele of arrInut) {

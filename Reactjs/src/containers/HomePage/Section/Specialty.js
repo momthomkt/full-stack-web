@@ -45,13 +45,13 @@ class Specialty extends Component {
                     </div>
                     <div className="section-body">
                         <Slider {...settings}>
-                            {allSpecialty && allSpecialty.length > 0 && allSpecialty.map(ele => {
+                            {allSpecialty && allSpecialty.length > 0 && allSpecialty.map((ele, index) => {
                                 let imageBase64 = '';
                                 if (ele.image) {
                                     imageBase64 = new Buffer(ele.image, 'base64').toString('binary');
                                 }
                                 return (
-                                    <div className="section-customize speicalty-child" onClick={() => this.handleViewDetailSpecialty(ele)}>
+                                    <div key={index} className="section-customize speicalty-child" onClick={() => this.handleViewDetailSpecialty(ele)}>
                                         <div className="bg-image section-specialty" style={{ backgroundImage: `url(${imageBase64})` }} />
                                         <div className="name-specialty">{language === LANGUAGES.VI ? ele.nameVi : ele.nameEn}</div>
                                     </div>

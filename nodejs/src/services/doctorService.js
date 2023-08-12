@@ -249,7 +249,6 @@ let bulkCreateSchedule = async (schedule) => {
                     item.maxNumber = MAX_NUMBER_SCHEDULE;
                     return item;
                 })
-                // console.log('schedule: ', typeof schedule[0].date);
 
                 await db.Schedule.destroy({
                     where: { doctorId: schedule[0].doctorId, date: new Date(schedule[0].date) }
@@ -277,7 +276,6 @@ let getScheduleByDate = (doctorId, date) => {
                 })
             }
             else {
-                //console.log("check new date: ", date);
                 let data = await db.Schedule.findAll({
                     where: { doctorId: doctorId, date: date },
                     include: [
@@ -287,7 +285,6 @@ let getScheduleByDate = (doctorId, date) => {
                     raw: false,
                     nest: true
                 })
-                //console.log('check result data: ', data)
                 if (!data) data = [];
                 resolve({
                     errCode: 0,

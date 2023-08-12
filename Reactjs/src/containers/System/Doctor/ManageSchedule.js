@@ -106,7 +106,6 @@ class ManageSchedule extends Component {
 
     handleSaveSchedule = async () => {
         let { rangeTime, selectedDoctor, currentDate } = this.state;
-        console.log('currentDate: ', currentDate)
         let result = [];
         if (!selectedDoctor || _.isEmpty(selectedDoctor)) {
             toast.error("Invalid selected doctor!");
@@ -125,7 +124,6 @@ class ManageSchedule extends Component {
                 //toast.error("Please choose at least one time button");
             }
             else {
-                console.log('check date schedule: ', currentDate);
                 selectedTime.map(item => {
                     let obj = {
                         doctorId: selectedDoctor.value,
@@ -134,7 +132,6 @@ class ManageSchedule extends Component {
                     };
                     result.push(obj);
                 })
-                console.log('check result: ', result);
                 let res = await saveBulkScheduleDoctor(result);
                 if (res && res.errCode === 0) {
                     toast.success('Save time succeed')
@@ -151,7 +148,6 @@ class ManageSchedule extends Component {
         const { isLoggedIn, language } = this.props;
         let { selectedDoctor, options, rangeTime } = this.state;
         let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-        console.log('Nguyen Van Tan: ', this.state);
         return (
 
             <div className="manage-shedule-container">
@@ -180,10 +176,10 @@ class ManageSchedule extends Component {
                         </div>
                         <div className="col-12 pick-hour-container">
                             {rangeTime &&
-                                rangeTime.map((item) => {
+                                rangeTime.map((item, index) => {
                                     let valueItem = language === LANGUAGES.VI ? item.valueVi : item.valueEn;
                                     return (
-                                        <button
+                                        <button key={index}
                                             className={item.isSelected === true ? "btn btn-schedule active" : "btn btn-schedule"}
                                             onClick={() => this.handleClickBtnSchedule(item)}
                                         >{valueItem}</button>

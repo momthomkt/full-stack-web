@@ -116,7 +116,6 @@ class BookingModal extends Component {
                 linkConfirm: "https://bookingcare.vn/"
             }
             let response = await BookAppointmentService(data);
-            console.log('check response booking: ', response);
             if (response) {
                 await this.setState({
                     isShowLoading: false
@@ -185,7 +184,6 @@ class BookingModal extends Component {
             reason, styleErr
         } = this.state;
         let { isOpenModal, handleCloseModal, dataTime, language } = this.props;
-        console.log('check dataTime: ', dataTime);
         let doctorId = '';
         if (dataTime && !_.isEmpty(dataTime)) doctorId = dataTime.doctorId;
 

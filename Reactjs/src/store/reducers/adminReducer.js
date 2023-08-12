@@ -30,14 +30,6 @@ const adminReducer = (state = initialState, action) => {
                 ...state
             }
         case actionTypes.FETCH_ALL_CODE_SUCCESS:
-            // let state = { ...state };
-            // state[action.typeInput + 's'] = action.data;
-            // state['isLoading_' + action.typeInput] = true;
-            // //console.log('fetch all code success: ', state);
-            // return {
-            //     ...state
-            // }
-            console.log('check action.data: ', action.data);
             state[action.typeInput + 's'] = action.data;
             state['isLoading_' + action.typeInput] = false;
             return {

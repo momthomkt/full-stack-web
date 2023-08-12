@@ -46,7 +46,6 @@ class Login extends Component {
             }
             if (data && data.errCode === 0) {
                 this.props.userLoginSuccess(data.user);
-                console.log('ok, nice');
             }
         } catch (error) {
             if (error.response) {
@@ -56,7 +55,6 @@ class Login extends Component {
                     })
                 }
             }
-            // console.log('alo123', error.respone);
         }
     }
 

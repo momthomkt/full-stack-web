@@ -57,11 +57,8 @@ class ProfileDoctor extends Component {
     }
 
     render() {
-        console.log('check state profileDoctor: ', this.state)
         let { dataProFile } = this.state;
         let { language, isShowDescriptionDoctor, dataTime } = this.props;
-        console.log('check dataTime: ', dataTime);
-        console.log('chech date: ', moment(dataTime.date).format('dddd - DD/MM/YYYY'))
         let contentUpVi = '';
         let contentUpEn = '';
         if (dataProFile && dataProFile.positionData) {

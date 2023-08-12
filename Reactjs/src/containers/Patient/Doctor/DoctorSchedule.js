@@ -115,7 +115,6 @@ class DoctorSchedule extends Component {
             isOpenModalSchedule: true,
             dataScheduleTimeModal: time
         })
-        //console.log('check time:', time);
     }
 
     handleCloseModalSchedule = () => {
