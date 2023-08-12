@@ -120,6 +120,7 @@ class doctorController {
             //         message: 'Missing input parameter'
             //     });
             // }
+            console.log('check body bulk: ', req.body)
             let result = await doctorService.bulkCreateSchedule(req.body);
             return res.status(200).json(result);
         } catch (error) {
@@ -160,6 +161,32 @@ class doctorController {
     getDoctorIntro = async (req, res) => {
         try {
             let result = await doctorService.getDoctorIntro(req.query.id);
+            return res.status(200).json(result);
+        } catch (error) {
+            console.log(error);
+            return res.status(200).json({
+                errCode: -1,
+                message: 'Error from server'
+            });
+        }
+    }
+
+    getPatientForDoctor = async (req, res) => {
+        try {
+            let result = await doctorService.getPatientForDoctor(req.query.doctorId, req.query.date);
+            return res.status(200).json(result);
+        } catch (error) {
+            console.log(error);
+            return res.status(200).json({
+                errCode: -1,
+                message: 'Error from server'
+            });
+        }
+    }
+
+    sendPrescription = async (req, res) => {
+        try {
+            let result = await doctorService.sendPrescription(req.body);
             return res.status(200).json(result);
         } catch (error) {
             console.log(error);

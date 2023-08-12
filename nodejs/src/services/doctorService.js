@@ -1,4 +1,5 @@
 import db from '../models/index';
+import emailService from './emailService';
 require('dotenv').config();
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE
 
@@ -248,7 +249,8 @@ let bulkCreateSchedule = async (schedule) => {
                     item.maxNumber = MAX_NUMBER_SCHEDULE;
                     return item;
                 })
-                //console.log(schedule);
+                // console.log('schedule: ', typeof schedule[0].date);
+
                 await db.Schedule.destroy({
                     where: { doctorId: schedule[0].doctorId, date: new Date(schedule[0].date) }
                 });
@@ -388,9 +390,108 @@ let getDoctorIntro = (doctorId) => {
     })
 }
 
+
+
+let getPatientForDoctor = (doctorId, date) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!doctorId || !date) {
+                console.log('alooooooooooooooooooooooooooooooooooooooooooooooooo');
+                resolve({
+                    errCode: 1,
+                    message: "Missing input parameter"
+                })
+            }
+            else {
+                let bookingArr = await db.Booking.findAll({
+                    where: {
+                        statusId: 'S2',
+                        doctorId: doctorId,
+                        date: new Date(date)
+                    },
+                    include: [
+                        { model: db.Allcode, as: 'timeData', attributes: ['valueEn', 'valueVi'] },
+                        {
+                            model: db.User, as: 'patientData', attributes: ['email', 'firstName', 'lastName', 'address', 'phoneNumber', 'gender'],
+                            include: [
+                                { model: db.Allcode, as: 'genderData', attributes: ['valueEn', 'valueVi'] }
+                            ]
+                        },
+                    ],
+                    raw: false,
+                    nest: true
+                })
+                resolve({
+                    errCode: 0,
+                    message: "Success",
+                    bookingArr: bookingArr
+                })
+            }
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+let sendPrescription = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            const inputArr = ['email', 'doctorId', 'patientId', 'timeType', 'imgPrescription', 'firstName', 'lastName'];
+            let isValid = true;
+            for (let ele of inputArr) {
+                if (!data[ele] || typeof data[ele] === "undefined") isValid = false;
+                break;
+            }
+            if (!isValid) {
+                resolve({
+                    errCode: 1,
+                    message: 'Missing input parameter'
+                })
+            }
+            else {
+                let appointment = await db.Booking.findOne({
+                    where: {
+                        doctorId: data.doctorId,
+                        patientId: data.patientId,
+                        timeType: data.timeType,
+                        statusId: 'S2'
+                    },
+                    raw: false
+                });
+
+                if (appointment) {
+                    await emailService.sendAttachmentPrescription({
+                        receivedEmail: data.email,
+                        patientName: data.firstName + ' ' + data.lastName,
+                        patientId: data.patientId,
+                        imgPrescription: data.imgPrescription
+                    });
+                    appointment.statusId = 'S3';
+                    await appointment.save();
+                    resolve({
+                        errCode: 0,
+                        message: 'OK'
+                    })
+                }
+                else {
+                    resolve({
+                        errCode: 2,
+                        message: 'Invalid input'
+                    })
+                }
+            }
+
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
 module.exports = {
     getTopDoctorHome, getAllDoctor, addDoctorInfo,
     getDetailDoctor, updateDoctorInfo, getDoctorMarkdown,
     bulkCreateSchedule, getScheduleByDate, getDetailManageDoctor,
-    getExtraDoctorInfo, getDoctorIntro
+    getExtraDoctorInfo, getDoctorIntro, getPatientForDoctor,
+    sendPrescription
 }

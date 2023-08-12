@@ -37,6 +37,10 @@
 
             .down {
                 padding-top: 10px;
+
+                .like-share-plugin {
+                    margin: 10px 0 20px 0;
+                }
             }
         }
     }
@@ -70,5 +74,9 @@
         img {
             width: 100%;
         }
+    }
+
+    .comment-doctor {
+        padding: 10px 100px;
     }
 }

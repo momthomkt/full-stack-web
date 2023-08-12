@@ -97,4 +97,16 @@ export const getAllClinic = () => {
 export const getOneClinic = (id) => {
     return axios.get(`/api/get-one-clinic?id=${id}`);
 }
+
+export const getPatientForDoctor = (doctorId, date) => {
+    return axios.get(`/api/get-list-patient-for-doctor?doctorId=${doctorId}&date=${date}`);
+}
+
+export const sendPrescription = (data) => {
+    return axios.post('/api/send-prescription', data);
+}
+
+// export const getPatientForDoctor = (data) => {
+//     return axios.post(`/api/get-list-patient-for-doctor`, data);
+// }
 // export { handleLoginApi, getAllUsers }; 

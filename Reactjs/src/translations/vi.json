@@ -49,7 +49,8 @@
             "manage-handbook": "Quản lý cẩm nang"
         },
         "doctor": {
-            "manage-schedule": "Quản lý kế hoạch khám bệnh"
+            "manage-schedule": "Quản lý kế hoạch khám bệnh",
+            "manage-patient": "Quản lý bệnh nhân khám bệnh"
         }
     },
     "manage-user": {
@@ -121,6 +122,22 @@
             "address-clinic": "Địa chỉ phòng khám",
             "note": "Ghi chú",
             "save-info": "Lưu thông tin"
+        }
+    },
+    "doctor": {
+        "manage-patient": {
+            "manage-patient-title": "Quản lý bệnh nhân khám bệnh",
+            "day": "Ngày khám bệnh",
+            "select-day": "Chọn ngày khám",
+            "time": "Thời gian",
+            "full-name": "Họ và tên",
+            "email": "Email",
+            "address": "Địa chỉ",
+            "phone-number": "Số điện thoại",
+            "gender": "Giới tính",
+            "confirm": "Xác nhận",
+            "send-bill": "Gửi hóa đơn",
+            "no-patient-content": "Không có bệnh nhân đặt lịch trong ngày này"
         }
     }
 }

@@ -106,6 +106,7 @@ class ManageSchedule extends Component {
 
     handleSaveSchedule = async () => {
         let { rangeTime, selectedDoctor, currentDate } = this.state;
+        console.log('currentDate: ', currentDate)
         let result = [];
         if (!selectedDoctor || _.isEmpty(selectedDoctor)) {
             toast.error("Invalid selected doctor!");
@@ -120,10 +121,11 @@ class ManageSchedule extends Component {
 
         if (rangeTime && rangeTime.length > 0) {
             let selectedTime = rangeTime.filter(item => item.isSelected === true);
-            if (!selectedTime || selectedTime.length <= 0) {
-                toast.error("Please choose at least one time button");
+            if (!selectedTime || selectedTime.length < 0) {
+                //toast.error("Please choose at least one time button");
             }
             else {
+                console.log('check date schedule: ', currentDate);
                 selectedTime.map(item => {
                     let obj = {
                         doctorId: selectedDoctor.value,
@@ -132,6 +134,7 @@ class ManageSchedule extends Component {
                     };
                     result.push(obj);
                 })
+                console.log('check result: ', result);
                 let res = await saveBulkScheduleDoctor(result);
                 if (res && res.errCode === 0) {
                     toast.success('Save time succeed')

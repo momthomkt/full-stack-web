@@ -49,7 +49,8 @@
             "manage-handbook": "Manage Handbook"
         },
         "doctor": {
-            "manage-schedule": "Manage Doctor's schedule"
+            "manage-schedule": "Manage Doctor's schedule",
+            "manage-patient": "Manage patient"
         }
     },
     "manage-user": {
@@ -121,6 +122,22 @@
             "address-clinic": "Address of clinic",
             "note": "Note",
             "save-info": "Save information"
+        }
+    },
+    "doctor": {
+        "manage-patient": {
+            "manage-patient-title": "Management of medical examination patients",
+            "day": "Day",
+            "select-day": "Choose a date of examination",
+            "time": "Time",
+            "full-name": "Full name",
+            "email": "Email",
+            "address": "Address",
+            "phone-number": "Phone Number",
+            "gender": "Gender",
+            "confirm": "Confirm",
+            "send-bill": "Send bill",
+            "no-patient-content": "No patients booked for this day"
         }
     }
 }

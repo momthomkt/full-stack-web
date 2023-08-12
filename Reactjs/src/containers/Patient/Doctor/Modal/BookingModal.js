@@ -11,6 +11,7 @@ import _ from 'lodash';
 import Select from 'react-select';
 import { toast } from 'react-toastify';
 import moment from 'moment';
+import LoadingOverlay from 'react-loading-overlay';
 
 class BookingModal extends Component {
     constructor(props) {
@@ -29,7 +30,8 @@ class BookingModal extends Component {
             errMessageEn: 'Please enter the information',
             styleErr: {
                 border: '1px solid red'
-            }
+            },
+            isShowLoading: false
         }
     }
 
@@ -90,7 +92,8 @@ class BookingModal extends Component {
 
     handleBookAppointment = async () => {
         this.setState({
-            isShowErrMessage: true
+            isShowErrMessage: true,
+            isShowLoading: true
         })
         let isValid = this.validateInput();
         if (isValid) {
@@ -115,6 +118,9 @@ class BookingModal extends Component {
             let response = await BookAppointmentService(data);
             console.log('check response booking: ', response);
             if (response) {
+                await this.setState({
+                    isShowLoading: false
+                })
                 if (response.errCode === 0) {
                     toast.success(this.props.language === LANGUAGES.VI ? "Đặt lịch hẹn thành công" : "Booking appointment succeed");
                     this.setState({
@@ -135,9 +141,16 @@ class BookingModal extends Component {
                     toast.error(this.props.language === LANGUAGES.VI ? "Lỗi hệ thống" : "Error system");
                 }
             }
+            else {
+                this.setState({
+                    isShowLoading: false
+                }, toast.error(this.props.language === LANGUAGES.VI ? "Lỗi hệ thống" : "Error system"))
+            }
         }
         else {
-            alert('Vui lòng nhập đầy đủ các thông tin yêu cầu');
+            this.setState({
+                isShowLoading: false
+            }, alert('Vui lòng nhập đầy đủ các thông tin yêu cầu'))
         }
     }
 
@@ -177,119 +190,125 @@ class BookingModal extends Component {
         if (dataTime && !_.isEmpty(dataTime)) doctorId = dataTime.doctorId;
 
         return (
-            <Modal isOpen={isOpenModal} className={"booking-modal-container"}
-                size="lg"
-                centered
+            <LoadingOverlay
+                active={this.state.isShowLoading}
+                spinner
+                text="Loading..."
             >
-                <div className="booking-modal-content">
-                    <div className="book-modal-header">
-                        <span className='left'>Thông tin đặt lịch khám bệnh</span>
-                        <span className='right'
-                            onClick={handleCloseModal}
-                        > <i className="fas fa-times"></i> </span>
-                    </div>
-                    <div className="book-modal-body container">
-                        <div className="doctor-info">
-                            <ProfileDoctor
-                                doctorId={doctorId}
-                                isShowDescriptionDoctor={false}
-                                dataTime={dataTime}
-                            />
+                <Modal isOpen={isOpenModal} className={"booking-modal-container"}
+                    size="lg"
+                    centered
+                >
+                    <div className="booking-modal-content">
+                        <div className="book-modal-header">
+                            <span className='left'>Thông tin đặt lịch khám bệnh</span>
+                            <span className='right'
+                                onClick={handleCloseModal}
+                            > <i className="fas fa-times"></i> </span>
                         </div>
-                        {/* <div className="price">
+                        <div className="book-modal-body container">
+                            <div className="doctor-info">
+                                <ProfileDoctor
+                                    doctorId={doctorId}
+                                    isShowDescriptionDoctor={false}
+                                    dataTime={dataTime}
+                                />
+                            </div>
+                            {/* <div className="price">
                             Giá khám
                         </div> */}
-                        <div className="row">
-                            <div className="col-6 form-group">
-                                <label>Họ và tên đệm</label>
-                                <input
-                                    value={this.state.firstName}
-                                    style={isShowErrMessage && !firstName ? styleErr : null}
-                                    onChange={(event) => this.handleChangeTextInfo(event, 'firstName')}
-                                    className="form-control" required
-                                />
-                                {this.handleShowErrMessage('firstName', language)}
-                            </div>
-                            <div className="col-6 form-group">
-                                <label>Tên</label>
-                                <input
-                                    value={this.state.lastName}
-                                    style={isShowErrMessage && !lastName ? styleErr : null}
-                                    onChange={(event) => this.handleChangeTextInfo(event, 'lastName')}
-                                    className="form-control" />
-                                {this.handleShowErrMessage('lastName', language)}
-                            </div>
-                            <div className="col-6 form-group">
-                                <label>Email</label>
-                                <input
-                                    value={this.state.email}
-                                    style={isShowErrMessage && !email ? styleErr : null}
-                                    onChange={(event) => this.handleChangeTextInfo(event, 'email')}
-                                    className="form-control" />
-                                {this.handleShowErrMessage('email', language)}
-                            </div>
-                            <div className="col-6 form-group">
-                                <label>Địa chỉ liên hệ</label>
-                                <input
-                                    value={this.state.address}
-                                    style={isShowErrMessage && !address ? styleErr : null}
-                                    onChange={(event) => this.handleChangeTextInfo(event, 'address')}
-                                    className="form-control" />
-                                {this.handleShowErrMessage('address', language)}
-                            </div>
-                            <div className="col-6 form-group">
-                                <label>Số điện thoại</label>
-                                <input
-                                    value={this.state.phoneNumber}
-                                    style={isShowErrMessage && !phoneNumber ? styleErr : null}
-                                    onChange={(event) => this.handleChangeTextInfo(event, 'phoneNumber')}
-                                    className="form-control" />
-                                {this.handleShowErrMessage('phoneNumber', language)}
-                            </div>
-                            <div className="col-6 form-group">
-                                <label>Giới tính</label>
-                                <Select
-                                    value={selectedGender}
+                            <div className="row">
+                                <div className="col-6 form-group">
+                                    <label>Họ và tên đệm</label>
+                                    <input
+                                        value={this.state.firstName}
+                                        style={isShowErrMessage && !firstName ? styleErr : null}
+                                        onChange={(event) => this.handleChangeTextInfo(event, 'firstName')}
+                                        className="form-control" required
+                                    />
+                                    {this.handleShowErrMessage('firstName', language)}
+                                </div>
+                                <div className="col-6 form-group">
+                                    <label>Tên</label>
+                                    <input
+                                        value={this.state.lastName}
+                                        style={isShowErrMessage && !lastName ? styleErr : null}
+                                        onChange={(event) => this.handleChangeTextInfo(event, 'lastName')}
+                                        className="form-control" />
+                                    {this.handleShowErrMessage('lastName', language)}
+                                </div>
+                                <div className="col-6 form-group">
+                                    <label>Email</label>
+                                    <input
+                                        value={this.state.email}
+                                        style={isShowErrMessage && !email ? styleErr : null}
+                                        onChange={(event) => this.handleChangeTextInfo(event, 'email')}
+                                        className="form-control" />
+                                    {this.handleShowErrMessage('email', language)}
+                                </div>
+                                <div className="col-6 form-group">
+                                    <label>Địa chỉ liên hệ</label>
+                                    <input
+                                        value={this.state.address}
+                                        style={isShowErrMessage && !address ? styleErr : null}
+                                        onChange={(event) => this.handleChangeTextInfo(event, 'address')}
+                                        className="form-control" />
+                                    {this.handleShowErrMessage('address', language)}
+                                </div>
+                                <div className="col-6 form-group">
+                                    <label>Số điện thoại</label>
+                                    <input
+                                        value={this.state.phoneNumber}
+                                        style={isShowErrMessage && !phoneNumber ? styleErr : null}
+                                        onChange={(event) => this.handleChangeTextInfo(event, 'phoneNumber')}
+                                        className="form-control" />
+                                    {this.handleShowErrMessage('phoneNumber', language)}
+                                </div>
+                                <div className="col-6 form-group">
+                                    <label>Giới tính</label>
+                                    <Select
+                                        value={selectedGender}
 
-                                    onChange={(selectedValue) => this.handleChangeSelectInfo(selectedValue, 'gender')}
-                                    options={genderOptions}
-                                    placeholder={'Chọn giới tính'}
-                                    styles={{
-                                        control: (baseStyles, state) => (isShowErrMessage && !selectedGender ? {
+                                        onChange={(selectedValue) => this.handleChangeSelectInfo(selectedValue, 'gender')}
+                                        options={genderOptions}
+                                        placeholder={'Chọn giới tính'}
+                                        styles={{
+                                            control: (baseStyles, state) => (isShowErrMessage && !selectedGender ? {
 
-                                            ...baseStyles,
-                                            borderColor: 'red',
-                                        } : {
-                                            ...baseStyles
-                                        }),
-                                    }}
-                                />
-                                {this.handleShowErrMessage('selectedGender', language)}
-                            </div>
-                            {/* <div className="col-4 form-group">
+                                                ...baseStyles,
+                                                borderColor: 'red',
+                                            } : {
+                                                ...baseStyles
+                                            }),
+                                        }}
+                                    />
+                                    {this.handleShowErrMessage('selectedGender', language)}
+                                </div>
+                                {/* <div className="col-4 form-group">
                                 <label>Ngày sinh</label>
                                 <input
                                     value={} className="form-control" />
                             </div> */}
-                            <div className="col-12 form-group">
-                                <label>Lý do khám</label>
-                                <input
-                                    value={this.state.reason}
-                                    style={isShowErrMessage && !reason ? styleErr : null}
-                                    onChange={(event) => this.handleChangeTextInfo(event, 'reason')}
-                                    className="form-control" />
-                                {this.handleShowErrMessage('reason', language)}
+                                <div className="col-12 form-group">
+                                    <label>Lý do khám</label>
+                                    <input
+                                        value={this.state.reason}
+                                        style={isShowErrMessage && !reason ? styleErr : null}
+                                        onChange={(event) => this.handleChangeTextInfo(event, 'reason')}
+                                        className="form-control" />
+                                    {this.handleShowErrMessage('reason', language)}
+                                </div>
                             </div>
                         </div>
+                        <div className="book-modal-footer">
+                            <button className="btn-booking-confirm btn btn-primary"
+                                onClick={() => this.handleBookAppointment()}
+                            >Xác nhận</button>
+                            <button className="btn-booking-cancel btn btn-danger">Hủy</button>
+                        </div>
                     </div>
-                    <div className="book-modal-footer">
-                        <button className="btn-booking-confirm btn btn-primary"
-                            onClick={() => this.handleBookAppointment()}
-                        >Xác nhận</button>
-                        <button className="btn-booking-cancel btn btn-danger">Hủy</button>
-                    </div>
-                </div>
-            </Modal>
+                </Modal>
+            </LoadingOverlay>
         );
     }
 }

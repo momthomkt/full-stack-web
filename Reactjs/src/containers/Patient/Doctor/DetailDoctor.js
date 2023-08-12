@@ -6,6 +6,8 @@ import { getDetailDoctorService } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils';
 import DoctorSchedule from './DoctorSchedule';
 import DoctorExtraInfo from './DoctorExtraInfo';
+import LikeAndShare from '../SocialPlugin/LikeAndShare';
+import Comment from '../SocialPlugin/Comment';
 
 class DetailDoctor extends Component {
     constructor(props) {
@@ -41,7 +43,9 @@ class DetailDoctor extends Component {
             contentUpVi = detailDoctor.positionData.valueVi + ', ' + detailDoctor.firstName + ' ' + detailDoctor.lastName;
             contentUpEn = detailDoctor.positionData.valueEn + ', ' + detailDoctor.lastName + ' ' + detailDoctor.firstName;
         }
-        //let charArr = detailDoctor.markDown.description.split("");
+
+        let currURL = process.env.REACT_APP_IS_LOCALHOST === 0 ? "http" : window.location.href;
+
         return (
             <div>
                 <HomeHeader isShowBanner={false} />
@@ -64,6 +68,11 @@ class DetailDoctor extends Component {
                                         })}
                                     </>
                                 }
+                                <div className="like-share-plugin">
+                                    <LikeAndShare
+                                        dataHref={currURL}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
